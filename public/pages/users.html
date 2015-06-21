@@ -1,0 +1,17 @@
+<div class="container">
+    <h3>Lista de utilizadores</h3>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>Utilizador</th>
+                <th>Email</th>
+            </tr>
+            <tr ng-repeat="user in users">
+                <td><a href="#/users/{{user._id}}">{{user.name}}</a></td>
+                <td>{{user.email}}</td>
+            </tr>
+        </table>
+        <a href="#/criaruser" class="btn btn-default" role="button">Criar utilizador</a>
+    </div>
+</div>
