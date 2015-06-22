@@ -1,34 +1,44 @@
-var mainApp = angular.module("mainApp", ["ngRoute", "ngToast"]);
+var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap']);
 
 mainApp.config(function ($routeProvider) {
     $routeProvider
 
         // route for the home page
         .when('/users', {
-            templateUrl: 'pages/users.html',
+            templateUrl: 'pages/user/users.html',
             controller: 'usersController'
         })
 
         .when('/users/:id', {
-            templateUrl: 'pages/usersdetail.html',
+            templateUrl: 'pages/user/usersdetail.html',
             controller: 'usersDetailController'
         })
 
         .when('/criaruser', {
-            templateUrl: 'pages/criaruser.html',
+            templateUrl: 'pages/user/criaruser.html',
             controller: 'criarUserController'
         })
 
         // route for the about page
         .when('/tarefas', {
-            templateUrl: 'pages/tarefas.html',
+            templateUrl: 'pages/tarefas/tarefas.html',
             controller: 'tarefasController'
         })
 
         // route for the contact page
         .when('/recursos', {
-            templateUrl: 'pages/recursos.html',
+            templateUrl: 'pages/recursos/recursos.html',
             controller: 'recursosController'
+        })
+
+        .when('/criarrecursos', {
+            templateUrl: 'pages/recursos/criarrecurso.html',
+            controller: 'criarRecursosController'
+        })
+
+        .when('/recursos/:id', {
+            templateUrl: 'pages/recursos/recursosdetail.html',
+            controller: 'recursosDetailController'
         })
 
         .otherwise({redirectTo: '/users'})

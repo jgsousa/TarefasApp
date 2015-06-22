@@ -1,0 +1,19 @@
+<div class="container">
+    <h3>Lista de recursos</h3>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>Nome</th>
+                <th>Nível</th>
+                <th>Atribuído</th>
+            </tr>
+            <tr ng-repeat="empregado in empregados">
+                <td><a href="#/recursos/{{empregado._id}}">{{empregado.name}}</a></td>
+                <td>{{empregado.nivel}}</td>
+                <td>{{empregado.tem.tarefa}}</td>
+            </tr>
+        </table>
+        <a href="#/criarrecursos" class="btn btn-default" role="button">Criar recurso</a>
+    </div>
+</div>

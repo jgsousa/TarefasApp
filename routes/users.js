@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/userdb.js');
 
 router.get('/utilizadores', function (req, res, next) {
-    var db = req.mongoDb;
-    db.getAllUsers(function (err, docs) {
+    User.getAllUsers(function (err, docs) {
         console.log(docs);
         res.json(docs);
     });
@@ -11,8 +11,7 @@ router.get('/utilizadores', function (req, res, next) {
 });
 
 router.post('/utilizadores', function (req, res, next) {
-    var db = req.mongoDb;
-    db.createUser(req.body, function (err, docs) {
+    User.createUser(req.body, function (err, docs) {
         res.send("ok");
     });
     console.log("passou pelo POST");
@@ -20,8 +19,7 @@ router.post('/utilizadores', function (req, res, next) {
 
 router.get('/utilizadores/:id', function (req, res, next) {
     var id = req.params.id;
-    var db = req.mongoDb;
-    db.getUserForId(id, function (err, docs) {
+    User.getUserForId(id, function (err, docs) {
         console.log("resposta singular");
         console.log(docs);
         res.json(docs);
@@ -30,10 +28,9 @@ router.get('/utilizadores/:id', function (req, res, next) {
 
 router.put('/utilizadores/:id', function (req, res, next) {
     var id = req.params.id;
-    var db = req.mongoDb;
     var user = req.body;
     user.updated_at = Date.now();
-    db.updateUser(user, function (err, docs) {
+    User.updateUser(user, function (err, docs) {
         res.send("ok");
     });
 });

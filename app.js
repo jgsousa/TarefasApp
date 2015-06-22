@@ -8,6 +8,7 @@ var db = require('./dbutils');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var recursos = require('./routes/recursos');
 
 var app = express();
 
@@ -31,7 +32,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use('/', exposeDb, routes);
 app.use('/users', exposeDb, users);
-
+app.use('/recursos', exposeDb, recursos);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
