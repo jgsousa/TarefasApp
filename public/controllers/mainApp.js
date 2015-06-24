@@ -41,7 +41,18 @@ mainApp.config(function ($routeProvider) {
             controller: 'recursosDetailController'
         })
 
-        .otherwise({redirectTo: '/users'})
+        .when('/recursos/:id/tarefa/:tarefa', {
+            templateUrl: 'pages/tarefas/tarefasdetail.html',
+            controller: 'tarefasDetailController'
+        })
+
+        .when('/recursos/:id/novatarefa', {
+            templateUrl: 'pages/tarefas/tarefasdetail.html',
+            controller: 'tarefasDetailController'
+        })
+
+        .otherwise({ redirectTo: '/users'});
+
 });
 
 mainApp.config(['ngToastProvider', function(ngToast) {

@@ -3,16 +3,21 @@
 
     <div>
         <table class="table">
+            <thead>
             <tr>
-                <th>Nome</th>
-                <th>Nível</th>
+                <th>Nome
+                    <span ng-click="sortNome()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                <th>Nível <span ng-click="sortNivel()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
                 <th>Atribuído</th>
             </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="empregado in empregados">
                 <td><a href="#/recursos/{{empregado._id}}">{{empregado.name}}</a></td>
                 <td>{{empregado.nivel}}</td>
                 <td>{{empregado.tem.tarefa}}</td>
             </tr>
+            </tbody>
         </table>
         <a href="#/criarrecursos" class="btn btn-default" role="button">Criar recurso</a>
     </div>

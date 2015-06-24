@@ -1,7 +1,7 @@
-mainApp.controller("usersController", function ($scope, $http) {
+mainApp.controller("usersController", function ($scope, $http, $modal) {
     var getHandler = function (data, status, headers, config) {
         $scope.users = data;
-    }
+    };
 
     $http.get('/users/utilizadores').
         success(getHandler).
@@ -11,6 +11,34 @@ mainApp.controller("usersController", function ($scope, $http) {
 
     $scope.clicked = function () {
         alert("blahhhh");
+    };
+
+    $scope.deleteSelected = function(user){
+        $scope.selected = user;
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: '/modals/popToConfirm.html',
+            controller: 'popToConfirmController',
+            size: 'sm',
+            resolve: {
+                texto: function () {
+                    return "Deseja apagar este utilizador?";
+                }
+            }
+        });
+
+        modalInstance.result.then(function (code) {
+            $http.delete('/users/utilizadores/' + $scope.selected._id, {}).
+                success(function(data){
+                    var index = $scope.users.indexOf($scope.selected);
+                    if(index > -1){
+                        $scope.users.splice(index,1);
+                    }
+                }).
+                error(function(err, data){
+
+                });
+        });
     }
 });
 

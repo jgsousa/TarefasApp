@@ -2,9 +2,12 @@ var db = require('mongoose');
 
 var TarefaSchema = new db.Schema({
     name: String,
-    created_by_id: String,
-    data_inicio: Date,
-    data_fim: Date
+    createdById: String,
+    projecto: String,
+    dataInicio: Date,
+    dataFim: Date,
+    status: {type: String, default: "Aberta"},
+    texto: String
 });
 
 var EmployeeSchema = new db.Schema({
@@ -18,11 +21,15 @@ var EmployeeSchema = new db.Schema({
 EmployeeSchema
     .virtual('tem.tarefa')
     .get(function () {
-        return !!(this.tarefas != null && this.tarefas.length > 0);
+        if (this.tarefas != null && this.tarefas.length > 0) {
+            return "Sim";
+        } else {
+            return "Não";
+        }
     });
 
-EmployeeSchema.set('toObject', { virtuals: true });
-EmployeeSchema.set('toJSON', { virtuals: true });
+EmployeeSchema.set('toObject', {virtuals: true});
+EmployeeSchema.set('toJSON', {virtuals: true});
 
 EmployeeSchema.statics.getAllEmployees = function (callback) {
     this.find({}, {}, callback);
@@ -42,4 +49,15 @@ EmployeeSchema.statics.updateEmpregado = function (empregado, callback) {
     this.update({_id: empregado._id}, empregado, {upsert: true}, callback);
 };
 
+EmployeeSchema.statics.addTarefaToEmpregado = function (id, tarefa, callback) {
+    this.getEmpregadoForId(id, function (err, empregado) {
+        if (!err) {
+            empregado.tarefas.push(tarefa);
+            db.model('employees', EmployeeSchema).
+                update({_id: empregado._id}, empregado.toObject(), {upsert: true}, callback);
+        }
+    });
+};
+
 module.exports = db.model('employees', EmployeeSchema);
+;

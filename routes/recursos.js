@@ -15,7 +15,7 @@ router.get('/recursos', function (req, res, next) {
 router.post('/recursos', function (req, res, next) {
     Empregado.createEmpregado(req.body, function (err, docs) {
         console.log("Tentou criar empregado");
-        if(err){
+        if (err) {
             console.log(err);
         }
         res.send("ok");
@@ -36,7 +36,18 @@ router.put('/recursos/:id', function (req, res, next) {
     var emp = req.body;
     emp.updated_at = Date.now();
     Empregado.updateEmpregado(emp, function (err, docs) {
-        if(err){
+        if (err) {
+            console.log(err);
+        }
+        res.send("ok");
+    });
+});
+
+router.post('/recursos/:id/tarefa', function (req, res, next) {
+    var tarefa = req.body;
+    Empregado.addTarefaToEmpregado(req.params.id, tarefa, function (err, docs) {
+        console.log(tarefa);
+        if (err) {
             console.log(err);
         }
         res.send("ok");

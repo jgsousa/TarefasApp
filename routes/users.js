@@ -35,4 +35,11 @@ router.put('/utilizadores/:id', function (req, res, next) {
     });
 });
 
+router.delete('/utilizadores/:id', function (req, res, next) {
+    var user = req.params.id;
+    User.deleteForId(user, function (err, docs) {
+        res.send("ok");
+    });
+});
+
 module.exports = router;

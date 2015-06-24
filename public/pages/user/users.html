@@ -3,15 +3,26 @@
 
     <div>
         <table class="table">
+            <thead>
             <tr>
                 <th>Utilizador</th>
                 <th>Email</th>
+                <th></th>
             </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="user in users">
                 <td><a href="#/users/{{user._id}}">{{user.name}}</a></td>
                 <td>{{user.email}}</td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="deleteSelected(user)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </td>
             </tr>
+            </tbody>
         </table>
         <a href="#/criaruser" class="btn btn-default" role="button">Criar utilizador</a>
+        {{resultado}}
     </div>
 </div>
