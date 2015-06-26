@@ -1,19 +1,15 @@
-mainApp.controller("usersController", function ($scope, $http, $modal) {
+mainApp.controller("usersController", function ($scope, $http, $modal, UserServices) {
     var getHandler = function (data, status, headers, config) {
         $scope.users = data;
     };
 
-    $http.get('/users/utilizadores').
-        success(getHandler).
-        error(function (data, status, headers, config) {
+    UserServices.getAllUsers( function (data) {
+            $scope.users = data;
+        }, function (data, status, headers, config) {
             console.log("bosta");
         });
 
-    $scope.clicked = function () {
-        alert("blahhhh");
-    };
-
-    $scope.deleteSelected = function(user){
+    $scope.deleteSelected = function (user) {
         $scope.selected = user;
         var modalInstance = $modal.open({
             animation: true,
@@ -28,55 +24,42 @@ mainApp.controller("usersController", function ($scope, $http, $modal) {
         });
 
         modalInstance.result.then(function (code) {
-            $http.delete('/users/utilizadores/' + $scope.selected._id, {}).
-                success(function(data){
-                    var index = $scope.users.indexOf($scope.selected);
-                    if(index > -1){
-                        $scope.users.splice(index,1);
-                    }
-                }).
-                error(function(err, data){
+            UserServices.deleteUser($scope.selected._id,function (data) {
+                var index = $scope.users.indexOf($scope.selected);
+                if (index > -1) {
+                    $scope.users.splice(index, 1);
+                }
+            }, function (err, data) {
 
-                });
+            });
         });
     }
 });
 
-mainApp.controller("usersDetailController", function ($scope, $http, $routeParams, ngToast) {
+mainApp.controller("usersDetailController", function ($scope, $http, $routeParams, ngToast, UserServices) {
 
-    var getHandler = function (data, status, headers, config) {
+
+    UserServices.getUserForId($routeParams.id, function(data){
         $scope.userData = data;
-    };
-
-    $http.get('/users/utilizadores/' + $routeParams.id).
-        success(getHandler).
-        error(function (data, status, headers, config) {
-            console.log("bosta");
-        });
+    }, function(err){});
 
     $scope.gravar = function () {
 
         if ($scope.modificarForm.$valid) {
-            $http.put('/users/utilizadores/' + $routeParams.id, $scope.userData, {}).
-                success(function (data) {
-                    ngToast.create('Gravado com sucesso');
-                }).
-                error(function (data) {
-
-                });
+            UserServices.updateUser($routeParams.id, $scope.userData,function (data) {
+                ngToast.create('Gravado com sucesso');
+            }, function(err){});
         }
     };
 });
 
-mainApp.controller("criarUserController", function ($scope, $http, $routeParams, ngToast) {
+mainApp.controller("criarUserController", function ($scope, $http, $routeParams, ngToast, UserServices) {
     $scope.gravar = function () {
         if ($scope.criarForm.$valid) {
             if ($scope.userData.password == $scope.confirmPass) {
-                $http.post('/users/utilizadores/', $scope.userData, {}).
-                    success(function () {
-                        ngToast.create('Gravado com sucesso');
-                    }).
-                    error();
+                UserServices.createUser($scope.userData, function () {
+                    ngToast.create('Gravado com sucesso');
+                }, function(err){});
             }
             else {
                 ngToast.danger("Passwords não são identicas");

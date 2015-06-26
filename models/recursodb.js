@@ -27,6 +27,21 @@ EmployeeSchema
             return "Não";
         }
     });
+EmployeeSchema
+    .virtual('tarefa.actual')
+    .get(function () {
+        if (this.tarefas != null && this.tarefas.length > 0) {
+            return this.tarefas[0].name;
+        }
+    });
+
+EmployeeSchema
+    .virtual('tarefa.fim')
+    .get(function () {
+        if (this.tarefas != null && this.tarefas.length > 0) {
+            return this.tarefas[0].dataFim;
+        }
+    });
 
 EmployeeSchema.set('toObject', {virtuals: true});
 EmployeeSchema.set('toJSON', {virtuals: true});

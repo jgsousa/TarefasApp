@@ -8,49 +8,40 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", function ($scope, $http, $filter) {
-    var getHandler = function (data, status, headers, config) {
-        $scope.empregados = data;
-    }
+mainApp.controller("recursosController", function ($scope, $http, $filter, EmployeeServices) {
 
-    $http.get('/recursos/recursos').
-        success(getHandler).
-        error(function (data, status, headers, config) {
-            console.log("bosta");
-        });
+    EmployeeServices.getAllEmployees(function (data) {
+        $scope.empregados = data;
+    },function (data) {
+        console.log("bosta");
+    });
 
     $scope.sortNome = function () {
         $scope.empregados = $filter('orderBy')($scope.empregados, "name");
-    }
+    };
     $scope.sortNivel = function () {
         $scope.empregados = $filter('orderBy')($scope.empregados, "nivel");
     }
 });
 
-mainApp.controller("recursosDetailController", function ($scope, $http, $routeParams, ngToast, $location) {
+mainApp.controller("recursosDetailController", function ($scope, $http, $routeParams, ngToast, $location, EmployeeServices) {
 
     $scope.niveis = niveis;
 
-    var getHandler = function (data, status, headers, config) {
+    EmployeeServices.getEmployeeForId($routeParams.id, function (data) {
         $scope.empData = data;
-    };
-
-    $http.get('/recursos/recursos/' + $routeParams.id).
-        success(getHandler).
-        error(function (data, status, headers, config) {
-            console.log("bosta");
-        });
+    }, function (data) {
+        console.log("bosta");
+    });
 
     $scope.gravar = function () {
 
         if ($scope.modificarForm.$valid) {
-            $http.put('/recursos/recursos/' + $routeParams.id, $scope.empData, {}).
-                success(function (data) {
-                    $location.path('/recursos');
-                }).
-                error(function (data) {
+            EmployeeServices.updateEmployee($routeParams.id, $scope.empData,function (data) {
+                $location.path('/recursos');
+            },function (data) {
 
-                });
+            });
         }
     };
 
@@ -63,18 +54,16 @@ mainApp.controller("recursosDetailController", function ($scope, $http, $routePa
     }
 });
 
-mainApp.controller("criarRecursosController", function ($scope, $http, ngToast, $location) {
+mainApp.controller("criarRecursosController", function ($scope, $http, ngToast, $location, EmployeeServices) {
     $scope.empData = {};
     $scope.empData.nivel = "Escolher nível";
     $scope.niveis = niveis;
 
     $scope.gravar = function () {
         if ($scope.criarForm.$valid && $scope.empData.nivel != "Escolher nível") {
-            $http.post('/recursos/recursos', $scope.empData, {}).
-                success(function () {
-                    $location.path('/recursos');
-                }).
-                error();
+            EmployeeServices.createEmployee($scope.empData,function () {
+                $location.path('/recursos');
+            });
         }
         else {
             ngToast.create('Escolher nível');

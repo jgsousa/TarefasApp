@@ -1,9 +1,15 @@
-var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap']);
+var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3']);
 
 mainApp.config(function ($routeProvider) {
     $routeProvider
 
         // route for the home page
+
+        .when('/main', {
+            templateUrl: 'pages/main/main.html',
+            controller: 'mainController'
+        })
+
         .when('/users', {
             templateUrl: 'pages/user/users.html',
             controller: 'usersController'
@@ -51,7 +57,7 @@ mainApp.config(function ($routeProvider) {
             controller: 'tarefasDetailController'
         })
 
-        .otherwise({ redirectTo: '/users'});
+        .otherwise({ redirectTo: '/main'});
 
 });
 

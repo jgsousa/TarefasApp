@@ -8,27 +8,26 @@ var estados = [
     "Fechada"
 ];
 
-mainApp.controller("tarefasDetailController", function ($scope, $http, $routeParams, ngToast, $location) {
+mainApp.controller("tarefasDetailController", function ($scope, $http, $routeParams, ngToast,
+                                                        $location, EmployeeServices) {
 
     $scope.projectos = projectos;
     $scope.estados = estados;
     $scope.tarefaData = {};
     if ($routeParams.tarefa) {
         $scope.titulo = "Detalhe tarefa";
-        $http.get('/recursos/recursos/' + $routeParams.id).
-            success(function (data) {
-                for (var i = 0; i < data.tarefas.length; i++) {
-                    var t = data.tarefas[i];
-                    if (t._id == $routeParams.tarefa) {
-                        $scope.tarefaData = t;
-                        $scope.tarefaData.dataInicio = new Date($scope.tarefaData.dataInicio);
-                        $scope.tarefaData.dataFim = new Date($scope.tarefaData.dataFim);
-                    }
+        EmployeeServices.getEmployeeForId($routeParams.id, function (data) {
+            for (var i = 0; i < data.tarefas.length; i++) {
+                var t = data.tarefas[i];
+                if (t._id == $routeParams.tarefa) {
+                    $scope.tarefaData = t;
+                    $scope.tarefaData.dataInicio = new Date($scope.tarefaData.dataInicio);
+                    $scope.tarefaData.dataFim = new Date($scope.tarefaData.dataFim);
                 }
-            }).
-            error(function (data, status, headers, config) {
-                console.log("bosta");
-            });
+            }
+        },function (data, status, headers, config) {
+            console.log("bosta");
+        });
     }
     else {
         $scope.tarefaData = {};
@@ -49,12 +48,10 @@ mainApp.controller("tarefasDetailController", function ($scope, $http, $routePar
     };
 
     $scope.gravar = function () {
-        $http.post('/recursos/recursos/' + $routeParams.id + '/tarefa', $scope.tarefaData, {}).
-            success(function () {
-                $location.path('/recursos/' + $routeParams.id);
-            }).
-            error(function () {
+        EmployeeServices.createTarefaForEmployee($routeParams.id, function () {
+            $location.path('/recursos/' + $routeParams.id);
+        }, function () {
 
-            });
+        });
     };
 });
