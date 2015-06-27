@@ -1,4 +1,4 @@
-mainApp.controller("usersController", function ($scope, $http, $modal, UserServices) {
+mainApp.controller("usersController", function ($scope, $modal, UserServices) {
     var getHandler = function (data, status, headers, config) {
         $scope.users = data;
     };
@@ -36,7 +36,7 @@ mainApp.controller("usersController", function ($scope, $http, $modal, UserServi
     }
 });
 
-mainApp.controller("usersDetailController", function ($scope, $http, $routeParams, ngToast, UserServices) {
+mainApp.controller("usersDetailController", function ($scope, $routeParams, ngToast, UserServices) {
 
 
     UserServices.getUserForId($routeParams.id, function(data){
@@ -53,7 +53,7 @@ mainApp.controller("usersDetailController", function ($scope, $http, $routeParam
     };
 });
 
-mainApp.controller("criarUserController", function ($scope, $http, $routeParams, ngToast, UserServices) {
+mainApp.controller("criarUserController", function ($scope, $routeParams, ngToast, UserServices) {
     $scope.gravar = function () {
         if ($scope.criarForm.$valid) {
             if ($scope.userData.password == $scope.confirmPass) {

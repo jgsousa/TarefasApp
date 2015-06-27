@@ -1,0 +1,22 @@
+<div class="container">
+    <h3>Lista de projectos</h3>
+
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Código
+                    <span ng-click="sortCodigo()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                <th>Nome <span ng-click="sortNome()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="projecto in projectos">
+                <td><a href="#/projectos/{{projecto._id}}">{{projecto.codigo}}</a></td>
+                <td>{{projecto.name}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="#/criarprojecto" class="btn btn-default" role="button">Criar projecto</a>
+    </div>
+</div>

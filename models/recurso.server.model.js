@@ -1,4 +1,5 @@
 var db = require('mongoose');
+var ProjectoS = require('./projecto.server.model.js');
 
 var TarefaSchema = new db.Schema({
     name: String,

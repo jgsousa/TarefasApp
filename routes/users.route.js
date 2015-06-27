@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/userdb.js');
+var User = require('../models/user.server.model.js');
 
 router.get('/utilizadores', function (req, res, next) {
     User.getAllUsers(function (err, docs) {
@@ -27,7 +27,6 @@ router.get('/utilizadores/:id', function (req, res, next) {
 });
 
 router.put('/utilizadores/:id', function (req, res, next) {
-    var id = req.params.id;
     var user = req.body;
     user.updated_at = Date.now();
     User.updateUser(user, function (err, docs) {

@@ -8,7 +8,7 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", function ($scope, $http, $filter, EmployeeServices) {
+mainApp.controller("recursosController", function ($scope, $filter, EmployeeServices) {
 
     EmployeeServices.getAllEmployees(function (data) {
         $scope.empregados = data;
@@ -24,7 +24,7 @@ mainApp.controller("recursosController", function ($scope, $http, $filter, Emplo
     }
 });
 
-mainApp.controller("recursosDetailController", function ($scope, $http, $routeParams, ngToast, $location, EmployeeServices) {
+mainApp.controller("recursosDetailController", function ($scope, $routeParams, ngToast, $location, EmployeeServices) {
 
     $scope.niveis = niveis;
 
@@ -54,7 +54,7 @@ mainApp.controller("recursosDetailController", function ($scope, $http, $routePa
     }
 });
 
-mainApp.controller("criarRecursosController", function ($scope, $http, ngToast, $location, EmployeeServices) {
+mainApp.controller("criarRecursosController", function ($scope, ngToast, $location, EmployeeServices) {
     $scope.empData = {};
     $scope.empData.nivel = "Escolher nível";
     $scope.niveis = niveis;

@@ -1,17 +1,22 @@
-var projectos = [
-    "NDAD",
-    "Non-chargable"
-];
+mainApp.controller("tarefasDetailController", function ($scope, $routeParams, ngToast,
+                                                        $location, EmployeeServices, ProjectoServices) {
 
-var estados = [
-    "Aberta",
-    "Fechada"
-];
+    var estados = [
+        "Aberta",
+        "Fechada"
+    ];
 
-mainApp.controller("tarefasDetailController", function ($scope, $http, $routeParams, ngToast,
-                                                        $location, EmployeeServices) {
+    ProjectoServices.getAllProjectos(function(data){
+        var projectos = [];
+        projectos.push( "Non-chargable");
+        for(var i = 0; i < data.length; i++){
+            projectos.push( data[i].codigo );
+        }
+        $scope.projectos = projectos;
+    }, function(err){
 
-    $scope.projectos = projectos;
+    });
+
     $scope.estados = estados;
     $scope.tarefaData = {};
     if ($routeParams.tarefa) {
@@ -48,10 +53,17 @@ mainApp.controller("tarefasDetailController", function ($scope, $http, $routePar
     };
 
     $scope.gravar = function () {
-        EmployeeServices.createTarefaForEmployee($routeParams.id, function () {
-            $location.path('/recursos/' + $routeParams.id);
-        }, function () {
+        if(!$routeParams.tarefa) {
+            EmployeeServices.createTarefaForEmployee($routeParams.id, $scope.tarefaData,function () {
+                $location.path('/recursos/' + $routeParams.id);
+            }, function () {
 
-        });
+            });
+        }
+        else{
+            EmployeeServices.updateTarefaForEmployee($routeParams.id, $scope.tarefaData, function(){
+
+            });
+        }
     };
 });

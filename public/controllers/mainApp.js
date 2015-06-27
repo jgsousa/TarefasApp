@@ -57,6 +57,21 @@ mainApp.config(function ($routeProvider) {
             controller: 'tarefasDetailController'
         })
 
+        .when('/projectos', {
+            templateUrl: 'pages/projectos/projectos.html',
+            controller: 'projectosController'
+        })
+
+        .when('/criarprojecto', {
+            templateUrl: 'pages/projectos/projectodetail.html',
+            controller: 'projectosDetailController'
+        })
+
+        .when('/projectos/:id', {
+            templateUrl: 'pages/projectos/projectodetail.html',
+            controller: 'projectosDetailController'
+        })
+
         .otherwise({ redirectTo: '/main'});
 
 });
@@ -75,5 +90,6 @@ mainApp.controller("navController", function ($scope) {
     $scope.funcao1 = "Utilizadores";
     $scope.funcao2 = "Tarefas";
     $scope.funcao3 = "Recursos";
+    $scope.funcao4 = "Projectos";
 });
 

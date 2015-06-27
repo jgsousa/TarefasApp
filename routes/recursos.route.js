@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Empregado = require('../models/recursodb.js');
+var Empregado = require('../models/recurso.server.model.js');
 
 router.get('/recursos', function (req, res, next) {
     Empregado.getAllEmployees(function (err, docs) {
@@ -52,6 +52,11 @@ router.post('/recursos/:id/tarefa', function (req, res, next) {
         }
         res.send("ok");
     });
+});
+
+router.put('/recursos/:id/tarefa/:tarefa', function (req, res, next) {
+    var tarefa = req.body;
+    //......
 });
 
 module.exports = router;

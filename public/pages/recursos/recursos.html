@@ -17,7 +17,7 @@
                 <td><a href="#/recursos/{{empregado._id}}">{{empregado.name}}</a></td>
                 <td>{{empregado.nivel}}</td>
                 <td>{{empregado.tarefa.actual}}</td>
-                <td>{{empregado.tarefa.fim}}</td>
+                <td>{{empregado.tarefa.fim | date:'MM/dd/yyyy' }}</td>
             </tr>
             </tbody>
         </table>
