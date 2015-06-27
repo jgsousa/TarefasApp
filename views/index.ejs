@@ -3,16 +3,11 @@
     <title>Lista de utilizadores</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bower_components/ngtoast/dist/ngToast.min.css">
-    <style>
-        .navbar-inverse .navbar-brand {
-            color: white;
-        }
-    </style>
 </head>
 <body>
 
 <div ng-controller="navController">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -23,14 +18,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/main"><b>Deloitte.</b></a>
+                <a class="navbar-brand" href="#/main"><b>Deloitte<span class="dot">.</span></b></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#/users">{{funcao1}}<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#/tarefas">{{funcao2}}</a></li>
+                    <li><a href="#/backlog">{{funcao2}}</a></li>
                     <li><a href="#/recursos">{{funcao3}}</a></li>
                     <li><a href="#/projectos">{{funcao4}}</a></li>
                 </ul>
@@ -51,9 +46,11 @@
 <script src="/controllers/projectosController.js"></script>
 <script src="/controllers/tarefasController.js"></script>
 <script src="/controllers/mainController.js"></script>
+<script src="/controllers/backlogController.js"></script>
 <script src="/services/user.services.js"></script>
 <script src="/services/recursos.services.js"></script>
 <script src="/services/projectos.services.js"></script>
+<script src="/services/backlog.services.js"></script>
 <script src="/modals/popToConfirmController.js"></script>
 <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
@@ -62,7 +59,11 @@
 <script src="/bower_components/d3/d3.js"></script>
 <script src="/bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
 <script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+<script src="/bower_components/ag-grid/dist/angular-grid.min.js"></script>
 <link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css">
+<link rel="stylesheet" href="/bower_components/ag-grid/dist/angular-grid.min.css">
+<link rel="stylesheet" href="/bower_components/ag-grid/dist/theme-fresh.min.css">
+<link rel="stylesheet" href="/stylesheets/style.css">
 
 </body>
 </html>

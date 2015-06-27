@@ -20,6 +20,6 @@
     "ngtoast": "~1.5.4",
     "angular-bootstrap": "~0.13.0",
     "angular-nvd3": "~0.1.1",
-    "ag-grid": "~1.10.1"
+    "ag-grid": "~1.9.2"
   }
 }

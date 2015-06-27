@@ -1,4 +1,4 @@
-var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3']);
+var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'angularGrid']);
 
 mainApp.config(function ($routeProvider) {
     $routeProvider
@@ -72,6 +72,11 @@ mainApp.config(function ($routeProvider) {
             controller: 'projectosDetailController'
         })
 
+        .when('/backlog', {
+            templateUrl: 'pages/backlog/backlog.html',
+            controller: 'backlogController'
+        })
+
         .otherwise({ redirectTo: '/main'});
 
 });
@@ -88,7 +93,7 @@ mainApp.config(['ngToastProvider', function(ngToast) {
 
 mainApp.controller("navController", function ($scope) {
     $scope.funcao1 = "Utilizadores";
-    $scope.funcao2 = "Tarefas";
+    $scope.funcao2 = "Backlog";
     $scope.funcao3 = "Recursos";
     $scope.funcao4 = "Projectos";
 });

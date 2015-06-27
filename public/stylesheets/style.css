@@ -1,8 +1,64 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.navbar-inverse {
+    color: white;
+    border-radius: 0;
+    background-color: #1B3277;
+    border-color: #3F51B5;
 }
 
-a {
-  color: #00B7FF;
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: lightgrey;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.dot {
+    color: #9ACD66;
+}
+
+.tabela {
+    padding-top: 15px;
+}
+
+thead {
+    background-color: #1B3277;
+    color: white;
+}
+
+.btn-deloitte {
+    background-color: #9ACD66;
+    color: white;
+}
+
+.panel-primary {
+    border: 0;
+    border-color: white;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #1B3277;
+    margin-bottom: 15px;
+}
+
+.backlog-grid {
+    margin: 20px;
+}
+
+.ag-pinned-header {
+    background-color: #1B3277;
+}
+
+.ag-fresh .ag-header-container {
+    background: linear-gradient(#1B3277, #1B3277);
+    color:white;
+}
+
+.ag-fresh .ag-header-icon{
+    fill:white;
+    color:white;
 }
