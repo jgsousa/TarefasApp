@@ -1,4 +1,4 @@
-mainApp.controller('backlogController', function ($scope, BacklogServices) {
+mainApp.controller('backlogController', [ '$scope', 'BacklogServices', function ($scope, BacklogServices) {
 
     var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
     var columnDefs = [
@@ -14,15 +14,8 @@ mainApp.controller('backlogController', function ($scope, BacklogServices) {
     };
 
     var sorter = function(a,b){
-        if(a.recurso == "Joao Paulo Domingos"){
-            console.log(b);
-        }
         var indexA = niveis.indexOf(a.nivel);
         var indexB = niveis.indexOf(b.nivel);
-        if(a.recurso == "Joao Paulo Domingos"){
-            console.log(indexA);
-            console.log(indexB);
-        }
         return ( indexA - indexB );
     };
 
@@ -51,4 +44,4 @@ mainApp.controller('backlogController', function ($scope, BacklogServices) {
         $scope.gridOptions.rowData = data;
         $scope.gridOptions.api.onNewRows();
     });
-});
+}]);

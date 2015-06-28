@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
+var debug = require('debug')('TarefasApp:server');
 mongoose.connection.on('open', function (ref) {
-    console.log('Connected to mongoDB server.');
+    debug('Connected to mongoDB server.');
+    debug('It has the following collections:');
     mongoose.connection.db.listCollections().toArray(function (err, names) {
-        console.log(names); // [{ name: 'dbname.myCollection' }]
+        debug(names); // [{ name: 'dbname.myCollection' }]
         module.exports.Collection = names;
     });
 });

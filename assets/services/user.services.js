@@ -1,4 +1,4 @@
-mainApp.service('UserServices', function ($http) {
+mainApp.service('UserServices', ['$http', function ($http) {
 
     this.getAllUsers = function (successCallback, errorCallback) {
         $http.get('/users/utilizadores').
@@ -31,4 +31,4 @@ mainApp.service('UserServices', function ($http) {
             error(errorCallback);
     };
 
-});
+}]);

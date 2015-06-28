@@ -12,14 +12,13 @@ router.get('/tarefas', function (req, res, next) {
     Empregado.getTarefas(function (err, docs) {
         res.json(docs);
     });
-    console.log("GET de tarefas");
 });
 
 
 router.post('/recursos', function (req, res, next) {
     Empregado.createEmpregado(req.body, function (err, docs) {
         if (err) {
-            console.log(err);
+            debug(err);
         }
         res.send("ok");
     });
@@ -33,12 +32,11 @@ router.get('/recursos/:id', function (req, res, next) {
 });
 
 router.put('/recursos/:id', function (req, res, next) {
-    console.log("Tentou actualizar");
     var emp = req.body;
     emp.updated_at = Date.now();
     Empregado.updateEmpregado(emp, function (err, docs) {
         if (err) {
-            console.log(err);
+            debug(err);
         }
         res.send("ok");
     });
@@ -47,16 +45,15 @@ router.put('/recursos/:id', function (req, res, next) {
 router.post('/recursos/:id/tarefa', function (req, res, next) {
     var tarefa = req.body;
     Empregado.addTarefaToEmpregado(req.params.id, tarefa, function (err, docs) {
-        console.log(tarefa);
         if (err) {
-            console.log(err);
+            debug(err);
         }
         res.send("ok");
     });
 });
 
 router.put('/recursos/:id/tarefa/:tarefa', function (req, res, next) {
-    var tarefa = req.body;
+    //var tarefa = req.body;
     //......
 });
 

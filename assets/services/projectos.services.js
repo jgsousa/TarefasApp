@@ -1,4 +1,4 @@
-mainApp.service('ProjectoServices', function ($http) {
+mainApp.service('ProjectoServices', ['$http', function ($http) {
 
     this.getAllProjectos = function (successCallback, errorCallback) {
         $http.get('/projectos/projectos').
@@ -20,7 +20,8 @@ mainApp.service('ProjectoServices', function ($http) {
     };
 
     this.updateProjecto = function (id, data, successCallback, errorCallback) {
-        console.log(data);
+        debug("Error:");
+        debug(data);
         $http.put('/projectos/projectos' + '/' + id, data, {}).
             success(successCallback).
             error(errorCallback);
@@ -32,4 +33,4 @@ mainApp.service('ProjectoServices', function ($http) {
             error(errorCallback);
     };
 
-});
+}]);

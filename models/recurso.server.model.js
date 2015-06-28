@@ -1,5 +1,4 @@
 var db = require('mongoose');
-var ProjectoS = require('./projecto.server.model.js');
 
 var TarefaSchema = new db.Schema({
     name: String,
@@ -79,17 +78,17 @@ EmployeeSchema.statics.getTarefas = function (callback) {
     var processarTarefas = function (err, data) {
         var dados = [];
         var now = new Date();
-        if(err) {
+        if (err) {
             callback(err);
         }
-        for(var i = 0; i < data.length; i++){
-            for(var j = 0; j < data[i].tarefas.length; j++){
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < data[i].tarefas.length; j++) {
                 if (data[i].tarefas[j].dataInicio < now && data[i].tarefas[j].dataFim > now) {
                     dados.push(data[i].tarefas[j]);
                 }
             }
         }
-        callback(undefined,dados);
+        callback(undefined, dados);
     };
 
     var now = new Date();

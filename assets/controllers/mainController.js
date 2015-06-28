@@ -1,4 +1,4 @@
-mainApp.controller("mainController", function ($scope, $http) {
+mainApp.controller("mainController", ['$scope', '$http', function ($scope, $http) {
 
     var dados = [{key: "Alocado", y: 0}, {key: "Livre", y: 0}];
 
@@ -46,9 +46,6 @@ mainApp.controller("mainController", function ($scope, $http) {
                 return d.y;
             },
             showValues: true,
-            valueFormat: function (d) {
-                return d3.format('1d')(d);
-            },
             transitionDuration: 500,
             xAxis: {
                 axisLabel: 'Projecto'
@@ -76,7 +73,7 @@ mainApp.controller("mainController", function ($scope, $http) {
     $http.get('/recursos/recursos').
         success(getRecursos).
         error(function (data, status, headers, config) {
-            console.log("bosta");
+
         });
 
     var searchDados = function (codigo, array) {
@@ -99,8 +96,7 @@ mainApp.controller("mainController", function ($scope, $http) {
                     novo.key = data[i].projecto;
                     novo.y = 1;
                     dados.push(novo);
-                }
-                else {
+                } else {
                     novo.y = novo.y + 1;
                 }
             }
@@ -111,4 +107,4 @@ mainApp.controller("mainController", function ($scope, $http) {
         });
 
 
-});
+}]);

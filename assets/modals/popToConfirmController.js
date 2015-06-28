@@ -1,4 +1,5 @@
-mainApp.controller('popToConfirmController', function ($scope, $modalInstance, texto) {
+mainApp.controller('popToConfirmController', ['$scope', '$modalInstance', 'texto',
+    function ($scope, $modalInstance, texto) {
 
     $scope.mensagem = texto;
 
@@ -9,4 +10,4 @@ mainApp.controller('popToConfirmController', function ($scope, $modalInstance, t
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-});
+}]);

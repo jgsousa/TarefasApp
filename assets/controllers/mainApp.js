@@ -1,6 +1,6 @@
-var mainApp = angular.module("mainApp", ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'angularGrid']);
+var mainApp = angular.module('mainApp', ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'angularGrid']);
 
-mainApp.config(function ($routeProvider) {
+mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
 
         // route for the home page
@@ -82,9 +82,9 @@ mainApp.config(function ($routeProvider) {
 
         .otherwise({ redirectTo: '/main'});
 
-});
+}]);
 
-mainApp.config(['ngToastProvider', function(ngToast) {
+mainApp.config(['ngToastProvider',function(ngToast) {
     ngToast.configure({
         verticalPosition: 'top',
         horizontalPosition: 'right',
@@ -94,10 +94,10 @@ mainApp.config(['ngToastProvider', function(ngToast) {
     });
 }]);
 
-mainApp.controller("navController", function ($scope) {
+mainApp.controller("navController", ['$scope', function ($scope) {
     $scope.funcao1 = "Utilizadores";
     $scope.funcao2 = "Backlog";
     $scope.funcao3 = "Recursos";
     $scope.funcao4 = "Projectos";
-});
+}]);
 

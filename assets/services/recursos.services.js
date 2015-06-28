@@ -1,4 +1,4 @@
-mainApp.service('EmployeeServices', function ($http) {
+mainApp.service('EmployeeServices', ['$http',function ($http) {
 
     this.getAllEmployees = function (successCallback, errorCallback) {
         $http.get('/recursos/recursos').
@@ -37,4 +37,4 @@ mainApp.service('EmployeeServices', function ($http) {
             error(errorCallback);
     };
 
-});
+}]);

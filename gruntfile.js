@@ -1,23 +1,57 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    require('load-grunt-tasks')(grunt);
     grunt.initConfig({
+        eslint: {
+            options: {
+                configFile: './.eslintrc'
+            },
+            target: [
+                'assets/controllers/*.js',
+                'assets/modals/*.js',
+                'assets/services/*.js',
+                'routes/**/*.js',
+                'models/**/*.js'
+            ]
+        },
         uglify: {
-            my_target: {
-                options: {
-                    sourceMap: true
+            compress: {
+                options:{
+                    mangle:true,
+                    compress:true
                 },
                 files: [{
-                    expand: true,
-                    cwd: 'src/js',
-                    src: '**/*.js',
-                    dest: 'dest/js'
+                    'public/dist/tarefas.min.js': [
+                        'assets/controllers/mainApp.js',
+                        'assets/controllers/*.js',
+                        'assets/services/*.js',
+                        'assets/modals/*.js'
+                    ]
                 }]
+            }
+        },
+        less: {
+            convert: {
+                options: {
+                    paths: ["assets/stylesheets"]
+                },
+                files: {
+                    "assets/stylesheets/style.css": "assets/stylesheets/style.less"
+                }
+            }
+        },
+        compress: {
+            main: {
+                options: {
+                    mode: 'gzip'
+                },
+                expand: true,
+                cwd: 'assets/',
+                src: ['**/*.js', '**/*.html'],
+                dest: 'public/'
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    grunt.registerTask('uglify', [
-        'uglify'
-    ]);
-}
+    grunt.registerTask('default', ['eslint', 'uglify', 'less']);
+    grunt.registerTask('deploy', ['eslint', 'uglify', 'less', 'compress']);
+};

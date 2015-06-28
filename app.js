@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var db = require('./dbutils');
 var compress = require('compression');
 var serveStatic = require('serve-static');
+var debug = require('debug')('TarefasApp:server');
 
 var expressSession = require('express-session');
 
@@ -46,16 +47,17 @@ passport.use('login', new LocalStrategy({
         User.findOne({ 'name' :  username },
             function(err, user) {
                 // In case of any error, return using the done method
-                if (err)
+                if (err) {
                     return done(err);
+                }
                 // Username does not exist, log error & redirect back
                 if (!user){
-                    console.log('User Not Found with username '+username);
+                    debug('User Not Found with username ' + username);
                     return done(null, false);
                 }
                 // User exists but wrong password, log the error
                 if (!user.verifyPassword(password)){
-                    console.log('Invalid Password');
+                    debug('Invalid Password');
                     return done(null, false);
                 }
                 // User and password both match, return user from
@@ -70,14 +72,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(serveStatic(__dirname + '/public', { maxAge: 31557600000 }));
+if (process.env.NODE_ENV === "production") {
+    app.use(serveStatic(__dirname + '/public', {maxAge: 31557600000}));
+} else {
+    app.use(serveStatic(__dirname + '/assets'));
+}
+
 app.use('/bower_components', serveStatic(__dirname + '/bower_components', { maxAge: 31557600000 }));
 app.use(expressSession({secret: 'explosions', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
@@ -117,15 +124,6 @@ app.use(function (err, req, res, next) {
         message: err.message,
         error: {}
     });
-});
-
-var server = app.listen(3000, function () {
-
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Tarefas service listening at http://%s:%s', host, port);
-
 });
 
 module.exports = app;
