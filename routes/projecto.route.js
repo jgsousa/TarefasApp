@@ -3,11 +3,12 @@ var router = express.Router();
 var Projecto = require('../models/projecto.server.model.js');
 
 router.get('/projectos', function (req, res, next) {
+    console.log("passou por aqui");
     Projecto.getAllProjectos(function (err, docs) {
         console.log(docs);
         res.json(docs);
     });
-    console.log("passou por aqui");
+
 });
 
 router.post('/projectos', function (req, res, next) {

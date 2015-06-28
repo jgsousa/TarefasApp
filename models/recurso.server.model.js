@@ -75,5 +75,33 @@ EmployeeSchema.statics.addTarefaToEmpregado = function (id, tarefa, callback) {
     });
 };
 
+EmployeeSchema.statics.getTarefas = function (callback) {
+    var processarTarefas = function (err, data) {
+        var dados = [];
+        var now = new Date();
+        if(err) {
+            callback(err);
+        }
+        for(var i = 0; i < data.length; i++){
+            for(var j = 0; j < data[i].tarefas.length; j++){
+                if (data[i].tarefas[j].dataInicio < now && data[i].tarefas[j].dataFim > now) {
+                    dados.push(data[i].tarefas[j]);
+                }
+            }
+        }
+        callback(undefined,dados);
+    };
+
+    var now = new Date();
+
+    this.find({
+        tarefas: {
+            $elemMatch: {
+                'dataInicio': {$lte: now},
+                'dataFim': {$gte: now}
+            }
+        }
+    }, {}, processarTarefas);
+};
+
 module.exports = db.model('employees', EmployeeSchema);
-;

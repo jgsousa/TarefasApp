@@ -1,5 +1,6 @@
 mainApp.controller('backlogController', function ($scope, BacklogServices) {
 
+    var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
     var columnDefs = [
         {headerName: "Nível", field: "nivel", width: 120},
         {headerName: "Recurso", field: "recurso"},
@@ -9,17 +10,27 @@ mainApp.controller('backlogController', function ($scope, BacklogServices) {
     var valueHandler = function (params) {
         var row = $scope.gridOptions.rowData[params.rowIndex];
         row[params.colDef.field] = params.newValue;
-        console.log(row);
-        console.log(params.colDef);
         BacklogServices.updateProjecto(params.colDef.projectId, params.newValue,"201506", row.recursoid);
+    };
+
+    var sorter = function(a,b){
+        if(a.recurso == "Joao Paulo Domingos"){
+            console.log(b);
+        }
+        var indexA = niveis.indexOf(a.nivel);
+        var indexB = niveis.indexOf(b.nivel);
+        if(a.recurso == "Joao Paulo Domingos"){
+            console.log(indexA);
+            console.log(indexB);
+        }
+        return ( indexA - indexB );
     };
 
     $scope.gridOptions = {
         columnDefs: columnDefs,
         showToolPanel: true,
-        enableSorting: true,
         enableColResize: true,
-        dontUseScrolls: true // because so little data, no need to use scroll bars
+        dontUseScrolls:false
     };
 
     $scope.gridOptions.ready = function () {
@@ -36,7 +47,7 @@ mainApp.controller('backlogController', function ($scope, BacklogServices) {
     };
 
     BacklogServices.getBacklogData("", function (data) {
-        console.log(JSON.stringify(data));
+        data.sort(sorter);
         $scope.gridOptions.rowData = data;
         $scope.gridOptions.api.onNewRows();
     });

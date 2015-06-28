@@ -76,6 +76,9 @@ mainApp.config(function ($routeProvider) {
             templateUrl: 'pages/backlog/backlog.html',
             controller: 'backlogController'
         })
+        .when('/login', {
+            templateUrl: 'pages/users/login.html'
+        })
 
         .otherwise({ redirectTo: '/main'});
 

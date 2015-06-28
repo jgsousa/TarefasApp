@@ -2,7 +2,17 @@
 
 </style>
 <div class="container">
-    <h3>Lista de projectos</h3>
+    <div class="row">
+        <h3 class="col-md-4">Lista de projectos</h3>
+
+        <form class="form-inline ">
+            <div class="form-group col-md-6 col-md-offset-2">
+                <input placeholder="Filtro"
+                       class="form-control col-md-1 col-md-offset-5 input-deloitte" ng-model="filtro.name">
+                <a href="#/criarprojecto" class="btn btn-deloitte col-md-3" role="button">Criar projecto</a>
+            </div>
+        </form>
+    </div>
 
     <div class="tabela">
 
@@ -15,12 +25,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="projecto in projectos">
+            <tr ng-repeat="projecto in projectos | filter:filtro">
                 <td><a href="#/projectos/{{projecto._id}}">{{projecto.codigo}}</a></td>
                 <td>{{projecto.name}}</td>
             </tr>
             </tbody>
         </table>
-        <a href="#/criarprojecto" class="btn btn-deloitte" role="button">Criar projecto</a>
     </div>
 </div>
