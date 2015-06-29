@@ -7,7 +7,22 @@ mainApp.controller("usersController", ['$scope', '$modal', 'UserServices',
 
         });
 
-        $scope.deleteSelected = function (user) {
+        $scope.deleteSelected = function () {
+            var index = $scope.users.indexOf($scope.selected);
+            if (index > -1) {
+                $scope.users.splice(index, 1);
+            }
+        };
+
+        $scope.confirmDeletion = function (user) {
+            $scope.selected = user;
+            UserServices.deleteUser($scope.selected._id, $scope.deleteSelected,
+                function (err, data) {
+
+                });
+        };
+
+        $scope.requestDeleteSelected = function (user) {
             $scope.selected = user;
             var modalInstance = $modal.open({
                 animation: true,
@@ -22,14 +37,7 @@ mainApp.controller("usersController", ['$scope', '$modal', 'UserServices',
             });
 
             modalInstance.result.then(function (code) {
-                UserServices.deleteUser($scope.selected._id, function (data) {
-                    var index = $scope.users.indexOf($scope.selected);
-                    if (index > -1) {
-                        $scope.users.splice(index, 1);
-                    }
-                }, function (err, data) {
-
-                });
+                $scope.confirmDeletion(user);
             });
         };
     }]);

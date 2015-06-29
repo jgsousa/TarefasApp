@@ -49,9 +49,14 @@ module.exports = function (grunt) {
                 src: ['**/*.js', '**/*.html'],
                 dest: 'public/'
             }
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.config.js'
+            }
         }
     });
 
-    grunt.registerTask('default', ['eslint', 'uglify', 'less']);
+    grunt.registerTask('default', ['eslint', 'uglify', 'less', 'karma']);
     grunt.registerTask('deploy', ['eslint', 'uglify', 'less', 'compress']);
 };

@@ -21,13 +21,18 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = https.createServer({
-    key: fs.readFileSync('./config/ssl/server.key'),
-    cert: fs.readFileSync('./config/ssl/server.crt'),
-    ca: fs.readFileSync('./config/ssl/ca.crt'),
-    requestCert: true,
-    rejectUnauthorized: false
-}, app);
+var server;
+if (process.env.NODE_ENV == 'production') {
+    server = https.createServer({
+        key: fs.readFileSync('./config/ssl/server.key'),
+        cert: fs.readFileSync('./config/ssl/server.crt'),
+        ca: fs.readFileSync('./config/ssl/ca.crt'),
+        requestCert: true,
+        rejectUnauthorized: false
+    }, app);
+} else {
+    server = http.createServer();
+}
 
 /**
  * Listen on provided port, on all network interfaces.
