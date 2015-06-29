@@ -51,8 +51,12 @@ module.exports = function (grunt) {
             }
         },
         karma: {
-            unit: {
+            options: {
                 configFile: 'karma.config.js'
+            },
+            unit: {
+                // run tests once instead of continuously
+                singleRun: true
             }
         }
     });

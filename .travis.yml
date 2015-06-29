@@ -7,4 +7,5 @@ branches:
     - master
 
 before_install:
+    - npm install -g bower
     - bower install
