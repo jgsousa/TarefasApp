@@ -40,6 +40,11 @@ thead {
   margin-bottom: 10px;
   margin-right: 10px;
 }
+.checkbox-header {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
 .panel-primary {
   border: 0;
   border-color: white;
@@ -65,7 +70,6 @@ thead {
 .ag-fresh .ag-root {
   height: 70%;
   width: 90%;
-  background-color: white;
   margin-left: 35px;
   margin-right: 35px;
 }

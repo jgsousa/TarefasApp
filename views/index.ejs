@@ -2,6 +2,8 @@
 <head>
     <title>Gestão de RC</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/bower_components/ag-grid/dist/angular-grid.min.css">
+    <link rel="stylesheet" href="/bower_components/ag-grid/dist/theme-fresh.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
     <link rel="stylesheet" href="/bower_components/ngtoast/dist/ngToast.min.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
@@ -52,7 +54,7 @@
     <% include ./scripts/includePROD %>
 <% } %>
 <% if (env != "production"){ %>
-    <% include ./scripts/includeDEV %>
+    <% include ./scripts/includeDEVELOP %>
 <% }%>
 
 <script src="/stylesheets/bootstrap/js/bootstrap.min.js"></script>
@@ -63,9 +65,6 @@
 <script src="/bower_components/ag-grid/dist/angular-grid.min.js"></script>
 
 <link rel="stylesheet" href="/bower_components/nvd3/nv.d3.min.css">
-<link rel="stylesheet" href="/bower_components/ag-grid/dist/angular-grid.min.css">
-<link rel="stylesheet" href="/bower_components/ag-grid/dist/theme-fresh.min.css">
-
 <script src="/bower_components/nvd3/nv.d3.min.js"></script>
 <script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
 
