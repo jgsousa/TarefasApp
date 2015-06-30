@@ -1,11 +1,11 @@
 *.iml
 .idea/
 node_modules
-public
+public/*
 bower_components
 dbstart.sh
-config
+config/ssl
 
 
-
+!public/dist
 public/favicon.ico

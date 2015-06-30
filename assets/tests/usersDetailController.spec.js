@@ -1,26 +1,26 @@
 describe('Test usersDetailController', function() {
 
-    var localController,
-        scope;
+    var $controller,
+        $scope;
 
     beforeEach(
         angular.mock.module("mainApp")
     );
 
-    beforeEach(inject(function ($rootScope, $controller) {
-        scope = $rootScope.$new();
+    beforeEach(angular.mock.inject(function ($rootScope, _$controller_) {
+        $scope = $rootScope.$new();
         var _UserServices_ = {};
         _UserServices_.getUserForId = function(id, callback){
             callback({"name":"Joao Guilherme Sousa", "email":"sousa@sousa.com"});
         };
-        localController = $controller('usersDetailController', {
-            $scope: scope,
+        $controller = _$controller_('usersDetailController', {
+            $scope: $scope,
             UserServices:_UserServices_
         });
     }));
 
     it ('User determined', function () {
-        expect(scope.userData).toBeDefined();
+        expect($scope.userData).toBeDefined();
     });
 
 });
