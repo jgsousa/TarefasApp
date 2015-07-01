@@ -20,8 +20,6 @@ mainApp.service('ProjectoServices', ['$http', function ($http) {
     };
 
     this.updateProjecto = function (id, data, successCallback, errorCallback) {
-        debug("Error:");
-        debug(data);
         $http.put('/projectos/projectos' + '/' + id, data, {}).
             success(successCallback).
             error(errorCallback);
