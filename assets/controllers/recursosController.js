@@ -23,6 +23,18 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
         $scope.sortNivel = function () {
             $scope.empregados = $filter('orderBy')($scope.empregados, "nivel");
         };
+
+        $scope.soLivresChanged = function () {
+            if (!$scope.filtro){
+                $scope.filtro = {};
+            }
+            $scope.filtro.tarefa = {};
+            if ($scope.soLivres) {
+                $scope.filtro.tarefa.actual = "!";
+            } else {
+                $scope.filtro.tarefa.actual = undefined;
+            }
+        };
     }]);
 
 mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToast', '$location', 'EmployeeServices',
