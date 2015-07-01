@@ -8,4 +8,8 @@ mongoose.connection.on('open', function (ref) {
         module.exports.Collection = names;
     });
 });
-mongoose.connect('mongodb://localhost/tarefas');
+if(process.env.LOCAL === 'yes'){
+    mongoose.connect('mongodb://localhost/tarefas');
+} else {
+    mongoose.connect(process.env.MONGOLAB_URI);
+}
