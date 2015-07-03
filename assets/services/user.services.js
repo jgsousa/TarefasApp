@@ -1,34 +1,40 @@
-mainApp.service('UserServices', ['$http', function ($http) {
+mainApp.service('UserServices', ['$http', '$q', function ($http, $q) {
 
-    this.getAllUsers = function (successCallback, errorCallback) {
-        $http.get('/users/utilizadores').
-            success(successCallback).
-            error(errorCallback);
-
+    this.getAllUsers = function () {
+        return $http.get('/users/utilizadores').
+            then(function(response){
+               return response.data;
+            });
     };
 
-    this.getUserForId = function (id, successCallback, errorCallback) {
-        $http.get('/users/utilizadores' + '/' + id).
-            success(successCallback).
-            error(errorCallback);
+    this.getUserForId = function (id) {
+        return $http.get('/users/utilizadores' + '/' + id).
+            then(function(response){
+                return response.data;
+            },function(response){
+               $q.reject(response.data);
+            });
     };
 
-    this.createUser = function (data, successCallback, errorCallback) {
-        $http.post('/users/utilizadores', data, {}).
-            success(successCallback).
-            error(errorCallback);
+    this.createUser = function (data) {
+        return $http.post('/users/utilizadores', data, {}).
+            then(function(response){
+              return response.data;
+            });
     };
 
-    this.updateUser = function (id, data, successCallback, errorCallback) {
-        $http.put('/users/utilizadores' + '/' + id, data, {}).
-            success(successCallback).
-            error(errorCallback);
+    this.updateUser = function (id, data) {
+        return $http.put('/users/utilizadores' + '/' + id, data, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
-    this.deleteUser = function (id, successCallback, errorCallback) {
-        $http.delete('/users/utilizadores' + '/' + id, {}).
-            success(successCallback).
-            error(errorCallback);
+    this.deleteUser = function (id) {
+        return $http.delete('/users/utilizadores' + '/' + id, {}).
+            then(function(response){
+               return id;
+            });
     };
 
 }]);

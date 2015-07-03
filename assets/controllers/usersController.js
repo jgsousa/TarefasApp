@@ -1,26 +1,21 @@
-mainApp.controller("usersController", ['$scope', '$modal', 'UserServices',
-    function ($scope, $modal, UserServices) {
+mainApp.controller("usersController", ['$scope', '$modal', 'UserServices', '$q',
+    function ($scope, $modal, UserServices, $q) {
 
-        UserServices.getAllUsers(function (data) {
+        UserServices.getAllUsers().then(function (data) {
             $scope.users = data;
-        }, function (data, status, headers, config) {
+        }, function (data) {
 
         });
 
-        $scope.deleteSelected = function () {
-            var index = $scope.users.indexOf($scope.selected);
-            if (index > -1) {
-                $scope.users.splice(index, 1);
-            }
-        };
-
-        $scope.confirmDeletion = function (user) {
-            $scope.selected = user;
-            UserServices.deleteUser($scope.selected._id, $scope.deleteSelected,
-                function (err, data) {
-
-                });
-        };
+        var deleteUser = function(code){
+                return UserServices.deleteUser($scope.selected._id);
+            },
+            removeUserFromTable = function(){
+                var index = $scope.users.indexOf($scope.selected);
+                if (index > -1) {
+                    $scope.users.splice(index, 1);
+                }
+            };
 
         $scope.requestDeleteSelected = function (user) {
             $scope.selected = user;
@@ -36,25 +31,28 @@ mainApp.controller("usersController", ['$scope', '$modal', 'UserServices',
                 }
             });
 
-            modalInstance.result.then(function (code) {
-                $scope.confirmDeletion(user);
-            });
+            modalInstance.result.
+                then(deleteUser).
+                then(removeUserFromTable);
         };
     }]);
 
-mainApp.controller("usersDetailController", ['$scope', '$routeParams', 'ngToast', 'UserServices',
-    function ($scope, $routeParams, ngToast, UserServices) {
+mainApp.controller("usersDetailController", ['$scope', '$routeParams', 'ngToast', 'UserServices', '$location',
+    function ($scope, $routeParams, ngToast, UserServices, $location) {
 
-
-        UserServices.getUserForId($routeParams.id, function (data) {
-            $scope.userData = data;
+        UserServices.getUserForId($routeParams.id).then(function (data) {
+            if (data) {
+                $scope.userData = data;
+            } else {
+                $location.path('/users/');
+            }
         }, function (err) {
         });
 
         $scope.gravar = function () {
 
             if ($scope.modificarForm.$valid) {
-                UserServices.updateUser($routeParams.id, $scope.userData, function (data) {
+                UserServices.updateUser($routeParams.id, $scope.userData).then(function (data) {
                     ngToast.create('Gravado com sucesso');
                 }, function (err) {
                 });
@@ -67,7 +65,7 @@ mainApp.controller("criarUserController", ['$scope', '$routeParams', 'ngToast', 
         $scope.gravar = function () {
             if ($scope.criarForm.$valid) {
                 if ($scope.userData.password == $scope.confirmPass) {
-                    UserServices.createUser($scope.userData, function () {
+                    UserServices.createUser($scope.userData).then(function () {
                         ngToast.create('Gravado com sucesso');
                     }, function (err) {
                     });
