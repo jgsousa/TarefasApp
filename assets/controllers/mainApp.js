@@ -1,4 +1,5 @@
-var mainApp = angular.module('mainApp', ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'angularGrid']);
+var mainApp = angular.module('mainApp', ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'ui.grid', 'ui.grid.edit',
+    'ui.grid.grouping', 'ui.grid.exporter']);
 
 mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -76,6 +77,11 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'pages/backlog/backlog.html',
             controller: 'backlogController'
         })
+
+        .when('/budget', {
+            templateUrl: 'pages/budget/budget.html',
+            controller: 'budgetController'
+        })
         .when('/login', {
             templateUrl: 'pages/users/login.html'
         })
@@ -99,5 +105,6 @@ mainApp.controller("navController", ['$scope', function ($scope) {
     $scope.funcao2 = "Backlog";
     $scope.funcao3 = "Recursos";
     $scope.funcao4 = "Projectos";
+    $scope.funcao5 = "Budget";
 }]);
 

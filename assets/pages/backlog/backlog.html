@@ -1,5 +1,44 @@
 <div>
-<h3 style="margin-left:35px">Backlog</h3>
+    <div class="container">
+        <div class="row">
+            <h3 class="col-md-4">Backlog</h3>
+        </div>
+        <div class="row">
 
-<div ag-grid="gridOptions" class="ag-fresh backlog-grid"></div>
+            <form class="form-inline ">
+
+                <div class="form-group col-md-12">
+                    <h4 class="col-md-2 text-deloitte">Mensal: {{budgetData.percentagem}} %</h4>
+                    <div class="btn-group col-md-1 col-md-offset-5 dropdown-deloitte" dropdown is-open="stat.isopen">
+                        <button id="dropdownMes" type="button" class="btn btn-default dropdown-toggle" dropdown-toggle
+                                ng-disabled="disabled">
+                            {{backlogData.mes}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="mes in meses">
+                                <a ng-click="mesSelected(mes)">{{mes}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-group col-md-1 dropdown-deloitte" dropdown is-open="stat.isopen2">
+                        <button id="dropdownAno" type="button" class="btn btn-default dropdown-toggle" dropdown-toggle
+                                ng-disabled="disabled">
+                            {{backlogData.ano}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="ano in anos">
+                                <a ng-click= anoSelected(ano)">{{ano}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#/exportarbacklog" class="btn btn-deloitte col-md-2"
+                       role="button">Periodo Actual</a>
+
+                </div>
+            </form>
+        </div>
+
+        <div ui-grid="gridOptions" ui-grid-edit ui-grid-grouping ui-grid-exporter class="backlogGrid"></div>
+    </div>
+
 </div>

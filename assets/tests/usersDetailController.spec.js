@@ -38,6 +38,7 @@ describe('Test usersDetailController', function () {
         expect($scope.userData.name).toEqual("Joao Guilherme Sousa");
     });
 
+
     it("Redirected if user doesn't exist", function () {
         deferred.resolve(undefined);
         $rootScope.$apply();

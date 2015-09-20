@@ -26,6 +26,7 @@ module.exports = function (config) {
             './bower_components/angular-nvd3/dist/angular-nvd3.min.js',
             './bower_components/angular-sanitize/angular-sanitize.min.js',
             './bower_components/ngtoast/dist/ngToast.min.js',
+            './bower_components/angular-ui-grid/ui-grid.js',
             './node_modules/angular-mocks/angular-mocks.js',
             './public/dist/tarefas.min.js',
             './assets/tests/**/*.js'
