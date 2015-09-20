@@ -1,7 +1,12 @@
 mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGroupingConstants', 'uiGridConstants',
     'BudgetServices', function ($scope, BacklogServices, uiGridGroupingConstants, uiGridConstants, BudgetServices) {
 
-        //var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
+        var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
+        var sorter = function(a,b){
+            var indexA = niveis.indexOf(a.nivel);
+            var indexB = niveis.indexOf(b.nivel);
+            return ( indexA - indexB );
+        };
 
         $scope.meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
             'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -11,6 +16,7 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
         var today = new Date();
         var m = today.getMonth();
         var yyyy = today.getFullYear();
+
 
         $scope.backlogData = {};
         $scope.backlogData.mes = $scope.meses[m];
@@ -112,7 +118,7 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
         };
 
         BacklogServices.getBacklogData($scope.getPeriodo(), function (data) {
-            $scope.gridOptions.data = data;
+            $scope.gridOptions.data = data.sort(sorter);
             $scope.actualizarTotais();
             $scope.budgetData.percentagem = $scope.getPercentagem();
         });
