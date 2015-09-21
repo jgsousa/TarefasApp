@@ -9,7 +9,8 @@ module.exports = function (passport) {
         { link: "recursos", label:"Recursos"},
         { link: "projectos", label:"Projectos"},
         { link: "backlog", label:"Backlog"},
-        { link: "budget", label:"Budget"}
+        { link: "budget", label:"Budget"},
+        { link: "oportunidades", label:"Oportunidades"}
     ];
 
     var isAuthenticated = function (req, res, next) {

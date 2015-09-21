@@ -1,0 +1,50 @@
+<style>
+
+</style>
+<div class="container">
+    <div class="row">
+        <h3 class="col-md-4">Lista de oportunidades</h3>
+
+        <form class="form-inline ">
+            <div class="form-group col-md-6 col-md-offset-2">
+                <div class="checkbox col-md-3 cd-md-offset-4" style="margin-top: 25px">
+                    <label>
+                        <input type="checkbox" ng-change="soAbertosChanged()" ng-model="mostraFechados"> Fechadas
+                    </label>
+                </div>
+                <input placeholder="Filtro"
+                       class="form-control col-md-1 input-deloitte" ng-model="filtro.descritivo">
+                <a href="#/criaroportunidade" class="btn btn-deloitte col-md-3" role="button">Criar oportunidade</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="tabela">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Cliente
+                    <span ng-click="sortCliente()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                <th>Descritivo <span ng-click="sortDescritivo()" class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                <th class="hidden-xs">Probabilidade</th>
+                <th><25%<br>({{t25}})</th>
+                <th><50%<br>({{t50}})</th>
+                <th><75%<br>({{t75}})</th>
+                <th>>75%<br>({{t100}})</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="oportunidade in oportunidades | filter:filtro">
+                <td><a href="#/oportunidades/{{oportunidade._id}}">{{oportunidade.cliente}}</a></td>
+                <td>{{oportunidade.descritivo}}</td>
+                <td class="hidden-xs">{{oportunidade.probabilidade}}</td>
+                <td>{{oportunidade.p25}}</td>
+                <td>{{oportunidade.p50}}</td>
+                <td>{{oportunidade.p75}}</td>
+                <td>{{oportunidade.p100}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

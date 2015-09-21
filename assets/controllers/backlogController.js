@@ -154,5 +154,5 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                 $scope.budgetData.percentagem = $scope.getPercentagem();
             });
         };
-        
+
     }]);

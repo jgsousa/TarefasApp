@@ -17,6 +17,7 @@ var users = require('./routes/users.route');
 var recursos = require('./routes/recursos.route');
 var projectos = require('./routes/projecto.route');
 var budgets = require('./routes/budget.route');
+var oportunidades = require('./routes/oportunidade.route');
 
 var app = express();
 
@@ -96,6 +97,7 @@ app.use('/users', exposeDb, users);
 app.use('/recursos', exposeDb, recursos);
 app.use('/projectos', exposeDb, projectos);
 app.use('/budget', exposeDb, budgets);
+app.use('/oportunidades', exposeDb, oportunidades);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

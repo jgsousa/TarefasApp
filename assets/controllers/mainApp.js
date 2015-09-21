@@ -78,6 +78,21 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             controller: 'backlogController'
         })
 
+        .when('/oportunidades', {
+            templateUrl: 'pages/oportunidades/oportunidades.html',
+            controller: 'oportunidadeController'
+        })
+
+        .when('/criaroportunidade', {
+            templateUrl: 'pages/oportunidades/oportunidadedetail.html',
+            controller: 'oportunidadeDetailController'
+        })
+
+        .when('/oportunidades/:id', {
+            templateUrl: 'pages/oportunidades/oportunidadedetail.html',
+            controller: 'oportunidadeDetailController'
+        })
+
         .when('/budget', {
             templateUrl: 'pages/budget/budget.html',
             controller: 'budgetController'
