@@ -10,7 +10,8 @@
     "module":true,
     "__dirname":true,
     "mainApp":true,
-    "debug":true
+    "debug":true,
+    "$":true
   },
   "plugins": [
   ],

@@ -1,12 +1,20 @@
 <div>
     <div class="container">
-        <div class="col-md-6">
+        <div class="col-md-4 graph">
             <h3>Percentagem de ocupação</h3>
             <nvd3 options="pieOptions" data="data"></nvd3>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4 graph">
             <h3>Distribuição por projecto</h3>
             <nvd3 options="barOptions" data="data2"></nvd3>
+        </div>
+        <div class="col-md-3 graph">
+            <h3>Distribuição de fees - {{periodo}}</h3>
+            <nvd3 options="pieOptionsFee" data="feeProj"></nvd3>
+        </div>
+        <div class="col-md-4 graph">
+            <h3>Fees por projecto - {{periodo}}</h3>
+            <nvd3 options="barOptions2" data="feeProj2"></nvd3>
         </div>
     </div>
 </div>

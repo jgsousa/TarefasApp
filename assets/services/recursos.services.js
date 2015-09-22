@@ -7,6 +7,13 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
 
     };
 
+    this.getAllPEmployees = function () {
+        return $http.get('/recursos/recursos').
+            then(function(response){
+                return response.data;
+            });
+    };
+
     this.getEmployeeForId = function (id, successCallback, errorCallback) {
         $http.get('/recursos/recursos/' + id).
             success(successCallback).
