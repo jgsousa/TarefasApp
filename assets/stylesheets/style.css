@@ -30,6 +30,7 @@ thead {
   color: white;
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: 5px;
 }
 .btn-deloitte:hover {
   background-color: #9acd66;
@@ -101,8 +102,10 @@ thead {
 .yellow {
   background-color: yellow !important;
 }
-.container {
-  width: 75%;
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 75%;
+  }
 }
 .graph {
   background-color: #f4f4f4;
@@ -110,4 +113,24 @@ thead {
   margin-right: 10px;
   margin-top: 20px;
   box-shadow: 5px 5px 2px lightgray;
+}
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.modal-body {
+  max-height: calc(100vh - 212px);
+  overflow-y: auto;
 }

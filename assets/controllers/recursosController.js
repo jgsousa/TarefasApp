@@ -8,8 +8,8 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices',
-    function ($scope, $filter, EmployeeServices) {
+mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', '$modal',
+    function ($scope, $filter, EmployeeServices, FileServices, $modal) {
 
         EmployeeServices.getAllEmployees(function (data) {
             $scope.empregados = data;
@@ -25,7 +25,7 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
         };
 
         $scope.soLivresChanged = function () {
-            if (!$scope.filtro){
+            if (!$scope.filtro) {
                 $scope.filtro = {};
             }
             $scope.filtro.tarefa = {};
@@ -35,6 +35,55 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                 $scope.filtro.tarefa.actual = undefined;
             }
         };
+
+        $scope.uploadFile = function(event){
+            var file = event.target.files[0];
+            var textType = /text.*/;
+            var csvType = 'application/vnd.ms-excel';
+            var openXLS = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            if (file.type.match(textType) || file.type.match(csvType)) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var dataArray;
+
+                    dataArray = FileServices.CSVToArray(reader.result);
+                    var employees = EmployeeServices.recursosFromArray(dataArray);
+                    callPopup(employees);
+                };
+
+                reader.readAsText(file);
+            } else if (file.type.match(openXLS)){
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var employees = FileServices.XLSXToArray(reader.result);
+                    callPopup(employees);
+                };
+                reader.readAsBinaryString(file);
+            } else {
+                $scope.textoLido = "File not supported!";
+            }
+        };
+
+        var callPopup = function(data){
+            var modalInstance = $modal.open({
+                animation: true,
+                templateUrl: '/modals/confirmFile.html',
+                controller: 'confirmFileController',
+                size: 'l',
+                resolve: {
+                    elements: function () {
+                        return data;
+                    }
+                }
+            });
+
+            modalInstance.result.
+                then(function () {
+                    return EmployeeServices.updateFromArray(data);
+                });
+        }
     }]);
 
 mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToast', '$location', 'EmployeeServices',

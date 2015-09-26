@@ -44,4 +44,23 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
             error(errorCallback);
     };
 
+    this.recursosFromArray = function(arrData){
+        var employees = [];
+        var employee;
+        arrData.forEach(function(element){
+            employee = {};
+            employee.codigo = element[0];
+            employee.nome = element[1];
+            employee.rateHora = element[2];
+            if (employee.codigo != "") {
+                employees.push(employee);
+            }
+        });
+        return employees;
+    };
+
+    this.updateFromArray = function(arrData){
+
+    };
+
 }]);

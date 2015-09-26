@@ -31,6 +31,13 @@ router.get('/recursos/:id', function (req, res, next) {
     });
 });
 
+router.get('/recursos/codigo/:id', function (req, res, next) {
+    var id = req.params.id;
+    Empregado.getEmpregadoForCodigo(id, function (err, docs) {
+        res.json(docs);
+    });
+});
+
 router.put('/recursos/:id', function (req, res, next) {
     var emp = req.body;
     emp.updated_at = Date.now();

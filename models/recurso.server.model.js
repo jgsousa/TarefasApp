@@ -11,6 +11,7 @@ var TarefaSchema = new db.Schema({
 });
 
 var EmployeeSchema = new db.Schema({
+    codigo:String,
     name: String,
     nivel: String,
     email: String,
@@ -54,6 +55,9 @@ EmployeeSchema.statics.getEmpregadoForId = function (id, callback) {
     this.findOne({_id: id}, {}, callback);
 };
 
+EmployeeSchema.statics.getEmpregadoForCodigo = function (id, callback) {
+    this.findOne({codigo: id}, {}, callback);
+};
 
 EmployeeSchema.statics.createEmpregado = function (empregado, callback) {
     var e = new this(empregado);
