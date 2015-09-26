@@ -11,7 +11,9 @@
     "__dirname":true,
     "mainApp":true,
     "debug":true,
-    "$":true
+    "$":true,
+    "XLSX":true,
+    "Spinner":true
   },
   "plugins": [
   ],

@@ -29,7 +29,7 @@ mainApp.service('FileServices', [function () {
 
         // Keep looping over the regular expression matches
         // until we can no longer find a match.
-        while (arrMatches = objPattern.exec(strData)) {
+        while ((arrMatches = objPattern.exec(strData))) {
 
             // Get the delimiter that was found.
             var strMatchedDelimiter = arrMatches[1];
@@ -80,7 +80,7 @@ mainApp.service('FileServices', [function () {
         var result = [];
         wb.SheetNames.forEach(function(sheetName) {
             var roa = XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
-            if(roa.length > 0){
+            if (roa.length > 0){
                 result.push(roa);
             }
         });

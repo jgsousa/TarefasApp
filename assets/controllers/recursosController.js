@@ -78,12 +78,12 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                     }
                 }
             });
-
+            
             modalInstance.result.
                 then(function () {
                     return EmployeeServices.updateFromArray(data);
                 });
-        }
+        };
     }]);
 
 mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToast', '$location', 'EmployeeServices',
