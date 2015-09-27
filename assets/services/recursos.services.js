@@ -1,47 +1,45 @@
 mainApp.service('EmployeeServices', ['$http',function ($http) {
 
-    this.getAllEmployees = function (successCallback, errorCallback) {
-        $http.get('/recursos/recursos').
-            success(successCallback).
-            error(errorCallback);
-
-    };
-
-    this.getAllPEmployees = function () {
+    this.getAllEmployees = function () {
         return $http.get('/recursos/recursos').
             then(function(response){
                 return response.data;
             });
     };
 
-    this.getEmployeeForId = function (id, successCallback, errorCallback) {
-        $http.get('/recursos/recursos/' + id).
-            success(successCallback).
-            error(errorCallback);
+    this.getEmployeeForId = function (id) {
+        return $http.get('/recursos/recursos/' + id).
+            then(function(response){
+                return response.data;
+            });
     };
 
-    this.createEmployee = function (data, successCallback, errorCallback){
-        $http.post('/recursos/recursos/', data, {}).
-            success(successCallback).
-            error(errorCallback);
+    this.createEmployee = function (data){
+        return $http.post('/recursos/recursos/', data, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.updateEmployee = function (id, data, successCallback, errorCallback) {
-        $http.put('/recursos//recursos/' + id, data, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.put('/recursos//recursos/' + id, data, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.deleteEmployee = function (id, successCallback, errorCallback) {
-        $http.delete('/recursos//recursos/' + id, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.delete('/recursos//recursos/' + id, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.createTarefaForEmployee = function (idEmpregado, data, successCallback, errorCallback) {
-        $http.post('/recursos/recursos/' + idEmpregado + '/tarefa', data, {}).
-            success(successCallback).
-            error(errorCallback);
+       return $http.post('/recursos/recursos/' + idEmpregado + '/tarefa', data, {}).
+           then(function(response){
+              return response.data;
+           });
     };
 
     this.recursosFromArray = function(arrData){
@@ -59,8 +57,19 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
         return employees;
     };
 
-    this.updateFromArray = function(arrData){
-
+    this.updateFromArray = function(newData,oldData){
+        var actualizacao = [];
+        newData.forEach(function(newElem){
+            oldData.forEach(function(oldElem){
+                oldElem.rateHora = newElem.rateHora;
+                if (newElem == oldElem){
+                    actualizacao.push(oldElem);
+                }
+            })
+        });
+        actualizacao.forEach(function(toUpdate){
+           updateEmployee(toUpdate._id, toUpdate);
+        });
     };
 
 }]);

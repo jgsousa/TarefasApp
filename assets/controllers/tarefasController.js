@@ -7,22 +7,20 @@ mainApp.controller("tarefasDetailController", ['$scope', '$routeParams', 'ngToas
             "Fechada"
         ];
 
-        ProjectoServices.getAllProjectos(function (data) {
+        ProjectoServices.getAllProjectos().then(function (data) {
             var projectos = [];
             projectos.push("Non-chargable");
             for (var i = 0; i < data.length; i++) {
                 projectos.push(data[i].codigo);
             }
             $scope.projectos = projectos;
-        }, function (err) {
-
         });
 
         $scope.estados = estados;
         $scope.tarefaData = {};
         if ($routeParams.tarefa) {
             $scope.titulo = "Detalhe tarefa";
-            EmployeeServices.getEmployeeForId($routeParams.id, function (data) {
+            EmployeeServices.getEmployeeForId($routeParams.id).then(function (data) {
                 for (var i = 0; i < data.tarefas.length; i++) {
                     var t = data.tarefas[i];
                     if (t._id == $routeParams.tarefa) {
@@ -31,8 +29,6 @@ mainApp.controller("tarefasDetailController", ['$scope', '$routeParams', 'ngToas
                         $scope.tarefaData.dataFim = new Date($scope.tarefaData.dataFim);
                     }
                 }
-            }, function (data, status, headers, config) {
-
             });
         } else {
             $scope.tarefaData = {};
@@ -54,13 +50,11 @@ mainApp.controller("tarefasDetailController", ['$scope', '$routeParams', 'ngToas
 
         $scope.gravar = function () {
             if (!$routeParams.tarefa) {
-                EmployeeServices.createTarefaForEmployee($routeParams.id, $scope.tarefaData, function () {
+                EmployeeServices.createTarefaForEmployee($routeParams.id, $scope.tarefaData).then(function () {
                     $location.path('/recursos/' + $routeParams.id);
-                }, function () {
-
                 });
             } else {
-                EmployeeServices.updateTarefaForEmployee($routeParams.id, $scope.tarefaData, function () {
+                EmployeeServices.updateTarefaForEmployee($routeParams.id, $scope.tarefaData).then(function () {
 
                 });
             }

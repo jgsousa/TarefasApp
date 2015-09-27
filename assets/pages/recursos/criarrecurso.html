@@ -3,7 +3,14 @@
     <h3>Criar recurso</h3>
 
     <form class="form-horizontal" name="criarForm">
+        <div class="form-group">
+            <label for="inputCodigo" class="col-sm-2 control-label">Codigo</label>
 
+            <div class="col-sm-9">
+                <input type="text" class="form-control"
+                       id="inputCodigo" placeholder="Codigo" ng-model="empData.codigo" ng-required="true">
+            </div>
+        </div>
         <div class="form-group">
             <label for="inputNome" class="col-sm-2 control-label">Nome completo</label>
 

@@ -23,12 +23,9 @@ mainApp.controller("oportunidadeController", ['$scope', '$modal', 'OportunidadeS
             });
         };
 
-        OportunidadeServices.getAllOportunidades(function (data) {
+        OportunidadeServices.getAllOportunidades().then(function (data) {
             $scope.oportunidades = data;
             actualizarProb();
-        }, function (data, status, headers, config) {
-            debug("Error:");
-            debug(data);
         });
 
         $scope.sortCliente = function () {
@@ -58,10 +55,8 @@ mainApp.controller("oportunidadeDetailController", ['$scope', '$routeParams', 'O
         $scope.estados = ["Aberto", "Fechado"];
         if ($routeParams.id) {
             $scope.titulo = "Detalhe de oportunidade";
-            OportunidadeServices.getOportunidadeForId($routeParams.id, function (data) {
+            OportunidadeServices.getOportunidadeForId($routeParams.id).then(function (data) {
                 $scope.opData = data;
-            }, function (data, status, headers, config) {
-
             });
         } else {
             $scope.titulo = "Criar oportunidade";
@@ -75,11 +70,11 @@ mainApp.controller("oportunidadeDetailController", ['$scope', '$routeParams', 'O
 
         $scope.gravar = function(){
             if ($routeParams.id){
-                OportunidadeServices.updateOportunidade($routeParams.id, $scope.opData, function(){
+                OportunidadeServices.updateOportunidade($routeParams.id, $scope.opData).then(function(){
                     $location.path('/oportunidades/');
                 });
             } else {
-                OportunidadeServices.createOportunidade($scope.opData, function () {
+                OportunidadeServices.createOportunidade($scope.opData).then(function () {
                     $location.path('/oportunidades/');
                 });
             }

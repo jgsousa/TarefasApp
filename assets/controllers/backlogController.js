@@ -54,7 +54,7 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
             return $scope.backlogData.ano + m;
         };
 
-        BacklogServices.getBacklogColumnDefs(function (data) {
+        BacklogServices.getBacklogColumnDefs().then(function (data) {
             for (var i = 0; i < data.length; i++) {
                 data[i].displayName = data[i].field;
                 data[i].projectId = data[i].projectId;
@@ -114,14 +114,12 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                     });
                 }
             });
-            return Math.round(resultado / $scope.budgetData.valor * 100);
+            if ($scope.budgetData) {
+                return Math.round(resultado / $scope.budgetData.valor * 100);
+            } else {
+                return 0;
+            }
         };
-
-        BacklogServices.getBacklogData($scope.getPeriodo(), function (data) {
-            $scope.gridOptions.data = data.sort(sorter);
-            $scope.actualizarTotais();
-            $scope.budgetData.percentagem = $scope.getPercentagem();
-        });
 
         BudgetServices.getBudgetForId($scope.getPeriodo(), function (data) {
             $scope.budgetData = {};
@@ -137,9 +135,17 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
 
         });
 
+        BacklogServices.getBacklogData($scope.getPeriodo()).then(function (data) {
+            $scope.gridOptions.data = data.sort(sorter);
+            $scope.actualizarTotais();
+            if ($scope.budgetData){
+                $scope.budgetData.percentagem = $scope.getPercentagem();
+            }
+        });
+
         $scope.mesSelected = function(mes){
             $scope.backlogData.mes = mes;
-            BacklogServices.getBacklogData($scope.getPeriodo(), function (data) {
+            BacklogServices.getBacklogData($scope.getPeriodo()).then(function (data) {
                 $scope.gridOptions.data = data.sort(sorter);
                 $scope.actualizarTotais();
                 $scope.budgetData.percentagem = $scope.getPercentagem();

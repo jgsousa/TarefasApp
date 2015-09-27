@@ -11,11 +11,10 @@ var niveis = [
 mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', 'ModalServices',
     function ($scope, $filter, EmployeeServices, FileServices, ModalServices) {
 
-        EmployeeServices.getAllEmployees(function (data) {
-            $scope.empregados = data;
-        }, function (data) {
-
-        });
+        EmployeeServices.getAllEmployees().
+            then(function (data) {
+                $scope.empregados = data;
+            });
 
         $scope.sortNome = function () {
             $scope.empregados = $filter('orderBy')($scope.empregados, "name");
@@ -49,7 +48,7 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
 
                     dataArray = FileServices.CSVToArray(reader.result);
                     var employees = EmployeeServices.recursosFromArray(dataArray);
-                    ModalServices.showFileValidation(employees).
+                    ModalServices.showFileValidation(employees).result.
                         result.then(function () {
                             return EmployeeServices.updateFromArray(employees);
                         });
@@ -82,20 +81,18 @@ mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToa
 
         $scope.niveis = niveis;
 
-        EmployeeServices.getEmployeeForId($routeParams.id, function (data) {
-            $scope.empData = data;
-        }, function (data) {
-
-        });
+        EmployeeServices.getEmployeeForId($routeParams.id).
+            then(function (data) {
+                $scope.empData = data;
+            });
 
         $scope.gravar = function () {
 
             if ($scope.modificarForm.$valid) {
-                EmployeeServices.updateEmployee($routeParams.id, $scope.empData, function (data) {
-                    $location.path('/recursos');
-                }, function (data) {
-
-                });
+                EmployeeServices.updateEmployee($routeParams.id, $scope.empData).
+                    then( function (data) {
+                        $location.path('/recursos');
+                    });
             }
         };
 
@@ -118,9 +115,10 @@ mainApp.controller("criarRecursosController", ['$scope', 'ngToast', '$location',
 
         $scope.gravar = function () {
             if ($scope.criarForm.$valid && $scope.empData.nivel != "Escolher nível") {
-                EmployeeServices.createEmployee($scope.empData, function () {
-                    $location.path('/recursos');
-                });
+                EmployeeServices.createEmployee($scope.empData).
+                    then(function () {
+                        $location.path('/recursos');
+                    });
             } else {
                 ngToast.create('Escolher nível');
             }

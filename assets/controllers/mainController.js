@@ -5,6 +5,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.pieOptions = {
             chart: {
+                color:['#9ACD66', '#18d3ff','#1B3277'],
                 type: 'pieChart',
                 height: 350,
                 x: function (d) {
@@ -32,6 +33,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.barOptions = {
             chart: {
+                color:['#9ACD66', '#18d3ff','#1B3277'],
                 type: 'discreteBarChart',
                 height: 350,
                 margin: {
@@ -60,6 +62,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.pieOptionsFee = {
             chart: {
+                color:['#9ACD66', '#18d3ff','#1B3277'],
                 type: 'pieChart',
                 height: 350,
                 x: function (d) {
@@ -87,6 +90,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.barOptions2 = {
             chart: {
+                color:['#9ACD66', '#18d3ff','#1B3277'],
                 type: 'discreteBarChart',
                 height: 350,
                 margin: {
@@ -161,7 +165,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
             }).error(function (err) {
 
             });
-        EmployeeServices.getAllPEmployees().then(ProjectoServices.getNetFeesForEmpregados)
+        EmployeeServices.getAllEmployees().then(ProjectoServices.getNetFeesForEmpregados)
             .then(function(data){
                 var today = new Date();
                 var m = today.getMonth() + 1;

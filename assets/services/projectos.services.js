@@ -1,34 +1,39 @@
 mainApp.service('ProjectoServices', ['$http', function ($http) {
 
     this.getAllProjectos = function (successCallback, errorCallback) {
-        $http.get('/projectos/projectos').
-            success(successCallback).
-            error(errorCallback);
+        return $http.get('/projectos/projectos').
+            then(function(response){
+                return response.data;
+            });
 
     };
 
     this.getProjectoForId = function (id, successCallback, errorCallback) {
-        $http.get('/projectos/projectos' + '/' + id).
-            success(successCallback).
-            error(errorCallback);
+        return $http.get('/projectos/projectos' + '/' + id).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.createProjecto = function (data, successCallback, errorCallback) {
-        $http.post('/projectos/projectos', data, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.post('/projectos/projectos', data, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.updateProjecto = function (id, data, successCallback, errorCallback) {
-        $http.put('/projectos/projectos' + '/' + id, data, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.put('/projectos/projectos' + '/' + id, data, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.deleteProjecto = function (id, successCallback, errorCallback) {
-        $http.delete('/projectos/projectos' + '/' + id, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.delete('/projectos/projectos' + '/' + id, {}).
+            then(function(response){
+               return response.data;
+            });
     };
 
     this.getNetFeesForEmpregados = function (recursos) {

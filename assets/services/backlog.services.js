@@ -10,24 +10,22 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
         return undefined;
     };
 
-    this.getBacklogColumnDefs = function (callback) {
+    this.getBacklogColumnDefs = function () {
         var columnDefs = [];
-        ProjectoServices.getAllProjectos(function (data) {
+        return ProjectoServices.getAllProjectos().then(function (data) {
             for (var i = 0; i < data.length; i++) {
                 columnDefs.push({headerName: data[i].name, field: data[i].codigo, projectId: data[i]._id});
             }
-            callback(columnDefs);
-        }, function (err) {
-
+            return columnDefs;
         });
     };
 
-    this.getBacklogData = function (periodo, callback) {
+    this.getBacklogData = function (periodo) {
         var data = [];
         var d;
-        ProjectoServices.getAllProjectos(function (projData) {
+        return ProjectoServices.getAllProjectos().then(function (projData) {
             var projects = projData;
-            EmployeeServices.getAllEmployees(function (recursos) {
+            return EmployeeServices.getAllEmployees().then(function (recursos) {
                 for (var i = 0; i < recursos.length; i++) {
                     d = {
                         nivel: recursos[i].nivel, recurso: recursos[i].name,
@@ -46,14 +44,10 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
                     }
                     data.push(d);
                 }
-                callback(data);
-            }, function (err) {
-                debug("Error:");
-                debug(err);
+                return data
             });
-        }, function (err) {
-            debug("Error:");
-            debug(err);
+        }).then(function(data) {
+            return data;
         });
     };
 
@@ -67,7 +61,7 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
 
         };
 
-        ProjectoServices.getProjectoForId(codigo, function (data) {
+        ProjectoServices.getProjectoForId(codigo).then(function (data) {
             var objHoras = getHoras(data, recurso, periodo);
             if (!objHoras) {
                 objHoras = {};
@@ -79,9 +73,6 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
                 objHoras.numero = horas;
             }
             ProjectoServices.updateProjecto(data._id, data, success, error);
-        }, function (err) {
-            debug("Error:");
-            debug(err);
         });
     };
 }]);
