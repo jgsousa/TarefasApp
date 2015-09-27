@@ -28,6 +28,8 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
             });
     };
 
+    var update = this.updateEmployee;
+
     this.deleteEmployee = function (id, successCallback, errorCallback) {
         return $http.delete('/recursos//recursos/' + id, {}).
             then(function(response){
@@ -65,10 +67,10 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
                 if (newElem == oldElem){
                     actualizacao.push(oldElem);
                 }
-            })
+            });
         });
         actualizacao.forEach(function(toUpdate){
-           updateEmployee(toUpdate._id, toUpdate);
+           update(toUpdate._id, toUpdate);
         });
     };
 

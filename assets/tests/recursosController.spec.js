@@ -13,26 +13,40 @@ describe('Test recursosController', function () {
                 "texto": "Gerir projecto", "_id": {"$oid": "55940c9c42421703002f4282"},
                 "status": "Aberta"}],
                 "__v": 0, "tem": {}, "tarefa": {}}
-        ];
+        ],
+        deferredAll,
+        mockEmployeeService,
+        $q,
+        $rootScope,
+        $modal;
 
     beforeEach(
-        angular.mock.module("mainApp")
+        angular.mock.module("mainApp", function ($provide) {
+            mockEmployeeService = {
+                getAllEmployees: function () {
+                    deferredAll = $q.defer();
+                    return deferredAll.promise;
+                }
+            };
+            $provide.value("EmployeeServices", mockEmployeeService);
+        })
     );
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(inject(function (_$rootScope_, _$controller_,_$q_,_$modal_) {
         $scope = _$rootScope_.$new();
-        var _EmployeeServices_ = {};
-        _EmployeeServices_.getAllEmployees = function (callback) {
-            callback(recursos);
-        };
+        $q = _$q_;
+        $modal = _$modal_;
+        $rootScope = _$rootScope_;
 
         $controller = _$controller_('recursosController', {
             $scope: $scope,
-            EmployeeServices: _EmployeeServices_
+            EmployeeServices: mockEmployeeService
         });
     }));
 
     it('Correct number of employees assigned', function () {
+        deferredAll.resolve(recursos);
+        $rootScope.$apply();
         expect($scope.empregados.length).toEqual(3);
     });
 

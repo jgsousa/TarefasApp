@@ -44,7 +44,7 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
                     }
                     data.push(d);
                 }
-                return data
+                return data;
             });
         }).then(function(data) {
             return data;
