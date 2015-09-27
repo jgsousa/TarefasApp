@@ -129,8 +129,8 @@ thead {
   opacity: 0;
   filter: alpha(opacity=0);
 }
-.modal-body {
-   max-height: calc(100vh - 212px);
-   overflow-y: auto;
-}
 
+.modal-body {
+  max-height: calc(100vh - 212px);
+  overflow-y: auto;
+}

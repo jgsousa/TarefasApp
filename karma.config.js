@@ -28,6 +28,8 @@ module.exports = function (config) {
             './bower_components/ngtoast/dist/ngToast.min.js',
             './bower_components/angular-ui-grid/ui-grid.js',
             './node_modules/angular-mocks/angular-mocks.js',
+            './assets/libs/spin.min.js',
+            './bower_components/angular-spinner-fixed/angular-spinner.min.js',
             './public/dist/tarefas.min.js',
             './assets/tests/**/*.js'
 

@@ -8,8 +8,8 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', '$modal',
-    function ($scope, $filter, EmployeeServices, FileServices, $modal) {
+mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', '$modal', 'ModalServices',
+    function ($scope, $filter, EmployeeServices, FileServices, $modal, ModalServices) {
 
         EmployeeServices.getAllEmployees(function (data) {
             $scope.empregados = data;
@@ -49,7 +49,10 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
 
                     dataArray = FileServices.CSVToArray(reader.result);
                     var employees = EmployeeServices.recursosFromArray(dataArray);
-                    callPopup(employees);
+                    ModalServices.showFileValidation(employees).
+                        result.then(function () {
+                            return EmployeeServices.updateFromArray(employees);
+                        });
                 };
 
                 reader.readAsText(file);
@@ -58,31 +61,19 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
 
                 reader.onload = function (e) {
                     var employees = FileServices.XLSXToArray(reader.result);
-                    callPopup(employees);
+                    $scope.spin.close();
+                    ModalServices.showFileValidation(employees).
+                        result.then(function () {
+                            return EmployeeServices.updateFromArray(employees);
+                        });
                 };
-                reader.readAsBinaryString(file);
+                $scope.spin = ModalServices.showSpinner();
+                $scope.spin.opened.then(function(){
+                    reader.readAsBinaryString(file);
+                });
             } else {
                 $scope.textoLido = "File not supported!";
             }
-        };
-
-        var callPopup = function(data){
-            var modalInstance = $modal.open({
-                animation: true,
-                templateUrl: '/modals/confirmFile.html',
-                controller: 'confirmFileController',
-                size: 'l',
-                resolve: {
-                    elements: function () {
-                        return data;
-                    }
-                }
-            });
-
-            modalInstance.result.
-                then(function () {
-                    return EmployeeServices.updateFromArray(data);
-                });
         };
     }]);
 
@@ -115,6 +106,8 @@ mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToa
         $scope.navegarTarefa = function (tarefa) {
             $location.path('/recursos/' + $routeParams.id + '/tarefa/' + tarefa._id);
         };
+
+
     }]);
 
 mainApp.controller("criarRecursosController", ['$scope', 'ngToast', '$location', 'EmployeeServices',

@@ -23,6 +23,7 @@
     "angular-sanitize": "~1.4.1",
     "angular-ui-grid": "~3.0.6",
     "js-xlsx": "~0.8.0",
-    "ngtoast": "~1.5.4"
+    "ngtoast": "~1.5.4",
+    "angular-spinner-fixed": "~0.5.1"
   }
 }

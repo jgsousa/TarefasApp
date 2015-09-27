@@ -1,5 +1,5 @@
 var mainApp = angular.module('mainApp', ['ngRoute', 'ngToast', 'ui.bootstrap', 'nvd3', 'ui.grid', 'ui.grid.edit',
-    'ui.grid.grouping', 'ui.grid.exporter']);
+    'ui.grid.grouping', 'ui.grid.exporter','angularSpinner']);
 
 mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
