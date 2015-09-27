@@ -8,8 +8,8 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', '$modal', 'ModalServices',
-    function ($scope, $filter, EmployeeServices, FileServices, $modal, ModalServices) {
+mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', 'ModalServices',
+    function ($scope, $filter, EmployeeServices, FileServices, ModalServices) {
 
         EmployeeServices.getAllEmployees(function (data) {
             $scope.empregados = data;

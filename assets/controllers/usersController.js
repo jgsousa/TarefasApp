@@ -1,5 +1,5 @@
-mainApp.controller("usersController", ['$scope', '$modal', 'UserServices', '$q',
-    function ($scope, $modal, UserServices, $q) {
+mainApp.controller("usersController", ['$scope', 'UserServices', '$q', 'ModalServices',
+    function ($scope, UserServices, $q, ModalServices) {
 
         UserServices.getAllUsers().then(function (data) {
             $scope.users = data;
@@ -19,19 +19,9 @@ mainApp.controller("usersController", ['$scope', '$modal', 'UserServices', '$q',
 
         $scope.requestDeleteSelected = function (user) {
             $scope.selected = user;
-            var modalInstance = $modal.open({
-                animation: true,
-                templateUrl: '/modals/popToConfirm.html',
-                controller: 'popToConfirmController',
-                size: 'sm',
-                resolve: {
-                    texto: function () {
-                        return "Deseja apagar este utilizador?";
-                    }
-                }
-            });
+            var pop = ModalServices.popUpToConfirm( "Deseja apagar este utilizador?");
 
-            modalInstance.result.
+            pop.result.
                 then(deleteUser).
                 then(removeUserFromTable);
         };
