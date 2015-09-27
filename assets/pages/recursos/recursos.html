@@ -3,7 +3,7 @@
 
         <form class="form-inline ">
             <h3 class="col-md-4">Lista de recursos</h3>
-            <div class="form-group col-md-6 col-md-offset-2">
+            <div class="form-group col-md-8">
                 <div class="checkbox col-md-3 cd-md-offset-4" style="margin-top: 25px">
                     <label>
                         <input type="checkbox" ng-change="soLivresChanged()" ng-model="soLivres"> Apenas livres
@@ -11,8 +11,8 @@
                 </div>
                 <input placeholder="Filtro"
                        class="form-control col-md-1 input-deloitte" ng-model="filtro.name">
-                <a href="#/criarrecursos" class="btn btn-deloitte col-md-3" role="button">Criar recurso</a>
-                <div class="fileUpload btn btn-deloitte">
+                <a href="#/criarrecursos" class="btn btn-deloitte col-md-2" role="button">Criar recurso</a>
+                <div class="fileUpload col-md-2 btn btn-deloitte">
                     <span>Upload</span>
                     <input id="uploadBtn" type="file" class="upload" input-on-change="uploadFile"/>
                 </div>
