@@ -23,9 +23,10 @@ mainApp.service('OportunidadeServices', ['$http', function ($http) {
     };
 
     this.updateOportunidade = function (id, data, successCallback, errorCallback) {
-        $http.put('/oportunidades/' + id, data, {}).
-            success(successCallback).
-            error(errorCallback);
+        return $http.put('/oportunidades/' + id, data, {}).
+            then(function(response){
+                return response.data;
+            });
     };
 
     this.deleteOportunidade = function (id, successCallback, errorCallback) {
