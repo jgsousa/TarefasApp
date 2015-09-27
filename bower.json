@@ -25,5 +25,8 @@
     "js-xlsx": "~0.8.0",
     "ngtoast": "~1.5.4",
     "angular-spinner-fixed": "~0.5.1"
+  },
+  "resolutions": {
+    "angular": ">=1.2.15 <1.5"
   }
 }
