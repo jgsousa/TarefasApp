@@ -36,7 +36,6 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
         };
 
         $scope.uploadFile = function(event){
-            EmployeeServices.sendRecursosMail();
             var file = event.target.files[0];
             var textType = /text.*/;
             var csvType = 'application/vnd.ms-excel';
