@@ -1,11 +1,12 @@
 mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'EmployeeServices',
     function ($scope, $http, ProjectoServices, EmployeeServices) {
 
+        var colors = ['#9ACD66', '#18d3ff','#00A1DE', '#72C7E7','#3C8A2E', '#BDD203'];
         var dados = [{key: "Alocado", y: 0}, {key: "Livre", y: 0}];
 
         $scope.pieOptions = {
             chart: {
-                color:['#9ACD66', '#18d3ff','#1B3277'],
+                color:colors,
                 type: 'pieChart',
                 height: 350,
                 x: function (d) {
@@ -33,7 +34,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.barOptions = {
             chart: {
-                color:['#9ACD66', '#18d3ff','#1B3277'],
+                color:colors,
                 type: 'discreteBarChart',
                 height: 350,
                 margin: {
@@ -62,7 +63,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.pieOptionsFee = {
             chart: {
-                color:['#9ACD66', '#18d3ff','#1B3277'],
+                color:colors,
                 type: 'pieChart',
                 height: 350,
                 x: function (d) {
@@ -90,7 +91,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
 
         $scope.barOptions2 = {
             chart: {
-                color:['#9ACD66', '#18d3ff','#1B3277'],
+                color:colors,
                 type: 'discreteBarChart',
                 height: 350,
                 margin: {
