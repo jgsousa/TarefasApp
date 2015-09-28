@@ -29,7 +29,7 @@ exports.sendMail = function(user,payload) {
         attachments: [
             {
                 filename: 'recursos.xlsx',
-                content: new Buffer(payload)
+                content: payload
             }
         ]
     }, function (error, response) {

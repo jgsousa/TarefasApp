@@ -26,6 +26,7 @@
     "pm2": "^0.14.2",
     "serve-favicon": "~2.2.1",
     "serve-static": "^1.10.0",
+    "xlsx": "^0.8.0",
     "xlsx-template": "0.0.2"
   },
   "devDependencies": {
