@@ -19,12 +19,14 @@
     "jade": "~1.9.2",
     "mongoose": "^4.0.6",
     "morgan": "~1.5.3",
+    "nodemailer": "^1.5.0",
     "passport": "^0.2.2",
     "passport-http": "^0.2.2",
     "passport-local": "^1.0.0",
     "pm2": "^0.14.2",
     "serve-favicon": "~2.2.1",
-    "serve-static": "^1.10.0"
+    "serve-static": "^1.10.0",
+    "xlsx-template": "0.0.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.1",

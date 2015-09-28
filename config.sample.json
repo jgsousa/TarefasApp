@@ -1,0 +1,8 @@
+{
+  "wsserver" : "localhost:8080",
+  "restport" : "9090",
+  "adminuser" : "adminuser",
+  "adminpass" : "adminpass"
+  "emailaccount" : "admin@yahoo.com",
+  "emailpass" : "adminpass"
+}

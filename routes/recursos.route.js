@@ -1,67 +1,88 @@
-var express = require('express');
-var router = express.Router();
-var Empregado = require('../models/recurso.server.model.js');
+module.exports = function (passport) {
+    var express = require('express');
+    var router = express.Router();
+    var Empregado = require('../models/recurso.server.model.js');
+    var mailer = require('../utils/mailer.js');
+    var xlsx = require('../utils/xlsx.creator.js');
 
-router.get('/recursos', function (req, res, next) {
-    Empregado.getAllEmployees(function (err, docs) {
-        res.json(docs);
-    });
-});
-
-router.get('/tarefas', function (req, res, next) {
-    Empregado.getTarefas(function (err, docs) {
-        res.json(docs);
-    });
-});
-
-
-router.post('/recursos', function (req, res, next) {
-    Empregado.createEmpregado(req.body, function (err, docs) {
-        if (err) {
-            debug(err);
+    var isAuthenticated = function (req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
         }
-        res.send("ok");
+        res.statusCode = 401;
+        res.setHeader('WWW-Authenticate', 'Basic realm="Tarefas Server"');
+        res.end('Unauthorized');
+    };
+
+    router.get('/recursos', isAuthenticated, function (req, res, next) {
+        Empregado.getAllEmployees(function (err, docs) {
+            res.json(docs);
+        });
     });
-});
 
-router.get('/recursos/:id', function (req, res, next) {
-    var id = req.params.id;
-    Empregado.getEmpregadoForId(id, function (err, docs) {
-        res.json(docs);
+    router.get('/tarefas', isAuthenticated, function (req, res, next) {
+        Empregado.getTarefas(function (err, docs) {
+            res.json(docs);
+        });
     });
-});
 
-router.get('/recursos/codigo/:id', function (req, res, next) {
-    var id = req.params.id;
-    Empregado.getEmpregadoForCodigo(id, function (err, docs) {
-        res.json(docs);
+
+    router.post('/recursos', isAuthenticated, function (req, res, next) {
+        Empregado.createEmpregado(req.body, function (err, docs) {
+            if (err) {
+                debug(err);
+            }
+            res.send("ok");
+        });
     });
-});
 
-router.put('/recursos/:id', function (req, res, next) {
-    var emp = req.body;
-    emp.updated_at = Date.now();
-    Empregado.updateEmpregado(emp, function (err, docs) {
-        if (err) {
-            debug(err);
-        }
-        res.send("ok");
+    router.get('/recursos/:id', isAuthenticated, function (req, res, next) {
+        var id = req.params.id;
+        Empregado.getEmpregadoForId(id, function (err, docs) {
+            res.json(docs);
+        });
     });
-});
 
-router.post('/recursos/:id/tarefa', function (req, res, next) {
-    var tarefa = req.body;
-    Empregado.addTarefaToEmpregado(req.params.id, tarefa, function (err, docs) {
-        if (err) {
-            debug(err);
-        }
-        res.send("ok");
+    router.get('/recursos/codigo/:id', isAuthenticated, function (req, res, next) {
+        var id = req.params.id;
+        Empregado.getEmpregadoForCodigo(id, function (err, docs) {
+            res.json(docs);
+        });
     });
-});
 
-router.put('/recursos/:id/tarefa/:tarefa', function (req, res, next) {
-    //var tarefa = req.body;
-    //......
-});
+    router.put('/recursos/:id', isAuthenticated, function (req, res, next) {
+        var emp = req.body;
+        emp.updated_at = Date.now();
+        Empregado.updateEmpregado(emp, function (err, docs) {
+            if (err) {
+                debug(err);
+            }
+            res.send("ok");
+        });
+    });
 
-module.exports = router;
+    router.post('/recursos/:id/tarefa', isAuthenticated, function (req, res, next) {
+        var tarefa = req.body;
+        Empregado.addTarefaToEmpregado(req.params.id, tarefa, function (err, docs) {
+            if (err) {
+                debug(err);
+            }
+            res.send("ok");
+        });
+    });
+
+    router.put('/recursos/:id/tarefa/:tarefa', isAuthenticated, function (req, res, next) {
+        //var tarefa = req.body;
+        //......
+    });
+
+    router.get('/mailrecursos', isAuthenticated, function (req, res, next) {
+        xlsx.createListaRecursos(function(ficheiro){
+            mailer.sendMail(req.user, ficheiro);
+            res.send('ok');
+        });
+
+    });
+
+    return router;
+};

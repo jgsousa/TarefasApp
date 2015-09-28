@@ -74,4 +74,10 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
         });
     };
 
+    this.sendRecursosMail = function(){
+        return $http.get('/recursos/mailrecursos/', {}).
+            then(function(response){
+                return response.data;
+            });
+    };
 }]);

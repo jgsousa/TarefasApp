@@ -93,11 +93,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', exposeDb, routes(passport));
-app.use('/users', exposeDb, users);
-app.use('/recursos', exposeDb, recursos);
-app.use('/projectos', exposeDb, projectos);
-app.use('/budget', exposeDb, budgets);
-app.use('/oportunidades', exposeDb, oportunidades);
+app.use('/users', exposeDb, users(passport));
+app.use('/recursos', exposeDb, recursos(passport));
+app.use('/projectos', exposeDb, projectos(passport));
+app.use('/budget', exposeDb, budgets(passport));
+app.use('/oportunidades', exposeDb, oportunidades(passport));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
