@@ -38,15 +38,16 @@ thead {
   margin-left: 5px;
 }
 .btn-deloitte:hover {
-  background-color: #9acd66;
+  background-color: #3c8a2e;
   color: white;
 }
-.btn-deloitte:active {
+.btn-deloitte:active,
+.btn-deloitte:focus {
   background-color: #9acd66;
   color: white;
 }
 .btn-deloittelight:hover {
-  background-color: #00a1de;
+  background-color: #1892b9;
   color: white;
 }
 .input-deloitte {
