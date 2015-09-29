@@ -74,6 +74,16 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                 $scope.textoLido = "File not supported!";
             }
         };
+
+        $scope.sendMail = function(){
+            EmployeeServices.sendRecursosMail();
+        };
+
+        $scope.downloadFile = function(){
+            EmployeeServices.downloadFile('listaRecursos.xlsx').then(function(data){
+
+            });
+        };
     }]);
 
 mainApp.controller("recursosDetailController", ['$scope', '$routeParams', 'ngToast', '$location', 'EmployeeServices',

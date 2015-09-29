@@ -12,26 +12,26 @@ module.exports = function (passport) {
         res.end('Unauthorized');
     };
 
-    router.get('/utilizadores', function (req, res, next) {
+    router.get('/utilizadores', isAuthenticated,function (req, res, next) {
         User.getAllUsers(function (err, docs) {
             res.json(docs);
         });
     });
 
-    router.post('/utilizadores', function (req, res, next) {
+    router.post('/utilizadores',isAuthenticated, function (req, res, next) {
         User.createUser(req.body, function (err, docs) {
             res.send("ok");
         });
     });
 
-    router.get('/utilizadores/:id', function (req, res, next) {
+    router.get('/utilizadores/:id',isAuthenticated, function (req, res, next) {
         var id = req.params.id;
         User.getUserForId(id, function (err, docs) {
             res.json(docs);
         });
     });
 
-    router.put('/utilizadores/:id', function (req, res, next) {
+    router.put('/utilizadores/:id',isAuthenticated, function (req, res, next) {
         var user = req.body;
         user.updated_at = Date.now();
         User.updateUser(user, function (err, docs) {
@@ -39,7 +39,7 @@ module.exports = function (passport) {
         });
     });
 
-    router.delete('/utilizadores/:id', function (req, res, next) {
+    router.delete('/utilizadores/:id',isAuthenticated, function (req, res, next) {
         var user = req.params.id;
         User.deleteForId(user, function (err, docs) {
             res.send("ok");

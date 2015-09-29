@@ -41,6 +41,10 @@ thead {
   background-color: #9acd66;
   color: white;
 }
+.btn-deloitte:active {
+  background-color: #9acd66;
+  color: white;
+}
 .btn-deloittelight:hover {
   background-color: #00a1de;
   color: white;

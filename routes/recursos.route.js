@@ -84,5 +84,15 @@ module.exports = function (passport) {
 
     });
 
+    router.get('/filerecursos', isAuthenticated, function (req, res, next) {
+        xlsx.createListaRecursos(function(ficheiro){
+            res.setHeader("Content-type","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            res.setHeader("Content-Length", ficheiro.length);
+            res.write(ficheiro);
+            res.end();
+        });
+
+    });
+
     return router;
 };

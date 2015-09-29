@@ -1,4 +1,4 @@
-mainApp.service('EmployeeServices', ['$http',function ($http) {
+mainApp.service('EmployeeServices', ['$http', '$q',function ($http, $q) {
 
     this.getAllEmployees = function () {
         return $http.get('/recursos/recursos').
@@ -79,5 +79,28 @@ mainApp.service('EmployeeServices', ['$http',function ($http) {
             then(function(response){
                 return response.data;
             });
+    };
+
+    this.downloadFile = function(defaultFileName){
+        var deferred = $q.defer();
+        $http.get('/recursos/filerecursos/', { responseType: "arraybuffer" }).success(
+            function (data, status, headers) {
+                var type = headers('Content-Type');
+                var disposition = headers('Content-Disposition');
+                if (disposition) {
+                    var match = disposition.match(/.*filename=\"?([^;\"]+)\"?.*/);
+                    if (match[1]) {
+                        defaultFileName = match[1];
+                    }
+                }
+                defaultFileName = defaultFileName.replace(/[<>:"\/\\|?*]+/g, '_');
+                var blob = new Blob([data], { type: type });
+                saveAs(blob, defaultFileName);
+                deferred.resolve(defaultFileName);
+            }).error(function (data, status) {
+                var e = /* error */
+                    deferred.reject(e);
+            });
+        return deferred.promise;
     };
 }]);

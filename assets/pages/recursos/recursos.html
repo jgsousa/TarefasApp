@@ -16,9 +16,8 @@
                     <span>Upload</span>
                     <input id="uploadBtn" type="file" class="upload" input-on-change="uploadFile"/>
                 </div>
-                <br>
-                {{textoLido}}
-                {{texto}}
+                <button class="btn btn-deloitte col-md-2 hidden-xs hidden-md hidden-sm" ng-click="downloadFile()">Download</button>
+                <button class="btn btn-deloitte col-md-1 hidden-lg" ng-click="sendMail()">Mail</button>
             </div>
         </form>
     </div>
