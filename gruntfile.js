@@ -24,7 +24,9 @@ module.exports = function (grunt) {
                         'assets/controllers/mainApp.js',
                         'assets/controllers/*.js',
                         'assets/services/*.js',
-                        'assets/modals/*.js'
+                        'assets/libs/*.js',
+                        'assets/modals/*.js',
+                        'assets/directives/*.js'
                     ],
                     'public/dist/loginApp.min.js':[
                         'assets/login/*.js'
