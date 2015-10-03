@@ -66,5 +66,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['eslint', 'uglify', 'less', 'karma']);
+    grunt.registerTask('build',['eslint','uglify', 'less']);
     grunt.registerTask('deploy', ['eslint', 'uglify', 'less', 'compress']);
 };
