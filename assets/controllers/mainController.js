@@ -180,7 +180,7 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
                     periodo = yyyy + m;
                 }
                 var dadosPeriodo = data[periodo];
-                if(dadosPeriodo) {
+                if (dadosPeriodo) {
                     var feeProj = dadosPeriodo.projectos;
                     $scope.feeProj = $.map(feeProj, function (value, index) {
                         return [value];

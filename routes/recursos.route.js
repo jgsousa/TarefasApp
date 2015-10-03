@@ -2,7 +2,7 @@ module.exports = function (passport) {
     var express = require('express');
     var router = express.Router();
     var Empregado = require('../models/recurso.server.model.js');
-    var mailer = require('../utils/mailer.js');
+    //var mailer = require('../utils/mailer.js');
     var mailgun = require('../utils/mailgun.js');
     var xlsx = require('../utils/xlsx.creator.js');
 
