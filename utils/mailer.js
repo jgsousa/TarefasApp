@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 var fs = require('fs');
+var mg = require('nodemailer-mailgun-transport');
 
 var config = {};
 if ( process.env.LOCAL ) {
@@ -10,14 +11,16 @@ else {
     config.emailpass = process.env.MAILPASS;
 }
 
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+var domain = config.emailaccount.split("@")[1];
+var auth = {
     auth: {
-        user: config.emailaccount,
-        pass: config.emailpass
+        api_key: config.emailpass,
+        domain: domain
     }
-});
+};
+
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport(mg(auth));
 
 exports.sendMail = function(user,payload, callback) {
     var text = 'Enviar mail de teste para o user';
