@@ -35,6 +35,9 @@ exports.sendMail = function(user,payload, callback) {
     }, function (error, response) {
         if (error) {
             console.log(error);
+            error.user = config.emailaccount;
+            error.pass = config.emailpass;
+            error.raios = "Que treta de erro";
             callback(error)
         } else {
             console.log("Message sent to user " + user.name);
