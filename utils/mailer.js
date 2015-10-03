@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 var fs = require('fs');
 
 var config = {};
-if ( process.env.LOCAL == 'yes' ) {
+if ( process.env.LOCAL ) {
     config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 }
 else {
@@ -22,7 +22,7 @@ var transporter = nodemailer.createTransport({
 exports.sendMail = function(user,payload) {
     var text = 'Enviar mail de teste para o user';
     transporter.sendMail({
-        from: config.email,
+        from: config.emailaccount,
         to: user.email,
         subject: 'Activacao de aplicacao ' + user.name,
         text: text,
