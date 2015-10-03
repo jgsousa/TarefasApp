@@ -15,7 +15,7 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
 
         var today = new Date();
         var m = today.getMonth();
-        var yyyy = today.getFullYear();
+        var yyyy = today.getFullYear().toString();
 
 
         $scope.backlogData = {};
@@ -51,7 +51,7 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
             if (m < 10){
                 m = '0' + m;
             }
-            return $scope.backlogData.ano + m;
+            return $scope.backlogData.ano.concat(m);
         };
 
         BacklogServices.getBacklogColumnDefs().then(function (data) {

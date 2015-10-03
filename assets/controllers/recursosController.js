@@ -8,8 +8,8 @@ var niveis = [
     "Analista"
 ];
 
-mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', 'ModalServices',
-    function ($scope, $filter, EmployeeServices, FileServices, ModalServices) {
+mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', 'ModalServices', 'ngToast',
+    function ($scope, $filter, EmployeeServices, FileServices, ModalServices, ngToast) {
 
         EmployeeServices.getAllEmployees().
             then(function (data) {
@@ -76,7 +76,11 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
         };
 
         $scope.sendMail = function(){
-            EmployeeServices.sendRecursosMail();
+            EmployeeServices.sendRecursosMail().then(function(data){
+                ngToast.create('Enviado com sucesso');
+            }, function(error){
+                ngToast.danger('Erro no envio');
+            });
         };
 
         $scope.downloadFile = function(){

@@ -3,6 +3,7 @@ module.exports = function (passport) {
     var router = express.Router();
     var Empregado = require('../models/recurso.server.model.js');
     var mailer = require('../utils/mailer.js');
+    var mailgun = require('../utils/mailgun.js');
     var xlsx = require('../utils/xlsx.creator.js');
 
     var isAuthenticated = function (req, res, next) {
@@ -78,7 +79,8 @@ module.exports = function (passport) {
 
     router.get('/mailrecursos', isAuthenticated, function (req, res, next) {
         xlsx.createListaRecursos(function(ficheiro){
-            mailer.sendMail(req.user, ficheiro, function(data){
+            mailgun.sendMail(req.user, ficheiro, function(data){
+                res.status(data.code);
                 res.send(data);
             });
 

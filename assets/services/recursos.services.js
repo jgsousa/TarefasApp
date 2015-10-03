@@ -78,6 +78,8 @@ mainApp.service('EmployeeServices', ['$http', '$q',function ($http, $q) {
         return $http.get('/recursos/mailrecursos/', {}).
             then(function(response){
                 return response.data;
+            }, function(error){
+                return $q.reject(error);
             });
     };
 

@@ -179,10 +179,16 @@ mainApp.controller("mainController", ['$scope', '$http', 'ProjectoServices', 'Em
                 } else {
                     periodo = yyyy + m;
                 }
-                var feeProj = data[periodo].projectos;
-                $scope.feeProj = $.map(feeProj, function(value, index) {
-                    return [value];
-                });
-                $scope.feeProj2 = [{key: "Cumulative", values: $scope.feeProj}];
+                var dadosPeriodo = data[periodo];
+                if(dadosPeriodo) {
+                    var feeProj = dadosPeriodo.projectos;
+                    $scope.feeProj = $.map(feeProj, function (value, index) {
+                        return [value];
+                    });
+                    $scope.feeProj2 = [{key: "Cumulative", values: $scope.feeProj}];
+                } else {
+                    $scope.feeProj = [];
+                    $scope.feeProj2 = [{key: "Cumulative", values: $scope.feeProj}];
+                }
             });
     }]);
