@@ -45,6 +45,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        copy: {
+            main: {
+                files: [
+                    // includes files within path and its sub-directories
+                    {
+                        expand: true,
+                        cwd: 'assets/pages/',
+                        src: ['**'],
+                        dest: 'public/pages/'
+                    }
+                ]
+            }
+        },
         compress: {
             main: {
                 options: {
@@ -67,7 +80,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('default', ['eslint', 'uglify', 'less', 'karma']);
-    grunt.registerTask('build',['eslint','uglify', 'less']);
-    grunt.registerTask('deploy', ['eslint', 'uglify', 'less', 'compress']);
+    grunt.registerTask('default', ['eslint', 'uglify', 'less', 'copy','karma']);
+    grunt.registerTask('build',['eslint','uglify', 'less', 'copy']);
+    grunt.registerTask('deploy', ['eslint', 'uglify', 'less','copy', 'compress']);
 };
