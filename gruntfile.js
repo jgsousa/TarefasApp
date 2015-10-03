@@ -25,6 +25,9 @@ module.exports = function (grunt) {
                         'assets/controllers/*.js',
                         'assets/services/*.js',
                         'assets/modals/*.js'
+                    ],
+                    'public/dist/loginApp.min.js':[
+                        'assets/login/*.js'
                     ]
                 }]
             }
@@ -35,7 +38,8 @@ module.exports = function (grunt) {
                     paths: ["assets/stylesheets"]
                 },
                 files: {
-                    "assets/stylesheets/style.css": "assets/stylesheets/style.less"
+                    "assets/stylesheets/style.css": "assets/stylesheets/style.less",
+                    "public/stylesheets/style.css": "assets/stylesheets/style.less"
                 }
             }
         },

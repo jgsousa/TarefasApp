@@ -29,15 +29,41 @@ thead {
   background-color: #9acd66;
   color: white;
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-left: 5px;
+}
+.btn-deloittelight {
+  background-color: #00a1de;
+  color: white;
+  margin-top: 20px;
+  margin-left: 5px;
 }
 .btn-deloitte:hover {
+  background-color: #3c8a2e;
+  color: white;
+}
+.btn-deloitte:active,
+.btn-deloitte:focus {
   background-color: #9acd66;
+  color: white;
+}
+.btn-deloittelight:hover {
+  background-color: #1892b9;
   color: white;
 }
 .input-deloitte {
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-right: 10px;
+}
+.dropdown-deloitte {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+.text-deloitte {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+.checkbox-header {
+  margin-top: 20px;
   margin-right: 10px;
 }
 .panel-primary {
@@ -65,7 +91,61 @@ thead {
 .ag-fresh .ag-root {
   height: 70%;
   width: 90%;
-  background-color: white;
   margin-left: 35px;
   margin-right: 35px;
+}
+.backlogGrid {
+  width: 100%;
+  height: 75vh;
+  margin-top: 10px;
+}
+.blue {
+  color: white;
+  background-color: #1b3277 !important;
+  text-align: center;
+}
+.green {
+  background-color: #9acd66 !important;
+}
+.red {
+  background-color: orangered !important;
+}
+.yellow {
+  background-color: yellow !important;
+}
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 75%;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  .container {
+    width: 100%;
+  }
+}
+.graph {
+  background-color: #f4f4f4;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  box-shadow: 5px 5px 2px lightgray;
+}
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-body {
+  max-height: calc(100vh - 212px);
+  overflow-y: auto;
 }
