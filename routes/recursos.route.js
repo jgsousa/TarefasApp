@@ -78,8 +78,10 @@ module.exports = function (passport) {
 
     router.get('/mailrecursos', isAuthenticated, function (req, res, next) {
         xlsx.createListaRecursos(function(ficheiro){
-            mailer.sendMail(req.user, ficheiro);
-            res.send('ok');
+            mailer.sendMail(req.user, ficheiro, function(data){
+                res.send(data);
+            });
+
         });
 
     });

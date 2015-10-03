@@ -19,7 +19,7 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendMail = function(user,payload) {
+exports.sendMail = function(user,payload, callback) {
     var text = 'Enviar mail de teste para o user';
     transporter.sendMail({
         from: config.emailaccount,
@@ -35,8 +35,10 @@ exports.sendMail = function(user,payload) {
     }, function (error, response) {
         if (error) {
             console.log(error);
+            callback(error)
         } else {
             console.log("Message sent to user " + user.name);
+            callback(response);
         }
     });
 };
