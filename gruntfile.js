@@ -20,7 +20,7 @@ module.exports = function (grunt) {
                     compress:true
                 },
                 files: [{
-                    'public/dist/tarefas.min.js': [
+                    'assets/bin/tarefas.min.js': [
                         'assets/controllers/mainApp.js',
                         'assets/controllers/*.js',
                         'assets/services/*.js',
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                         'assets/modals/*.js',
                         'assets/directives/*.js'
                     ],
-                    'public/dist/loginApp.min.js':[
+                    'assets/bin/loginApp.min.js':[
                         'assets/login/*.js'
                     ]
                 }]
@@ -40,8 +40,7 @@ module.exports = function (grunt) {
                     paths: ["assets/stylesheets"]
                 },
                 files: {
-                    "assets/stylesheets/style.css": "assets/stylesheets/style.less",
-                    "public/stylesheets/style.css": "assets/stylesheets/style.less"
+                    "assets/stylesheets/style.css": "assets/stylesheets/style.less"
                 }
             }
         },
@@ -80,7 +79,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('default', ['eslint', 'uglify', 'less', 'copy','karma']);
-    grunt.registerTask('build',['eslint','uglify', 'less', 'copy']);
-    grunt.registerTask('deploy', ['eslint', 'uglify', 'less','copy', 'compress']);
+    grunt.registerTask('default', ['eslint', 'uglify', 'less','karma']);
+    grunt.registerTask('build',['eslint','uglify', 'less']);
+    grunt.registerTask('deploy', ['eslint', 'uglify', 'less', 'compress']);
 };

@@ -82,7 +82,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === "production") {
-    app.use(serveStatic(__dirname + '/public', {maxAge: 31557600000}));
+    app.use(serveStatic(__dirname + '/assets', {maxAge: 31557600000}));
 } else {
     app.use(serveStatic(__dirname + '/assets'));
 }
