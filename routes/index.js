@@ -11,6 +11,7 @@ module.exports = function (passport) {
         { link: "backlog", label:"Backlog"},
         { link: "budget", label:"Budget"},
         { link: "oportunidades", label:"Oportunidades"}
+        //===== yeoman routejs hook =====//
     ];
 
     var isAuthenticated = function (req, res, next) {

@@ -100,7 +100,7 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
         .when('/login', {
             templateUrl: 'pages/users/login.html'
         })
-
+        //===== yeoman mainapp hook =====//
         .otherwise({ redirectTo: '/main'});
 
 }]);
