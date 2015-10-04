@@ -50,7 +50,7 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                     var employees = EmployeeServices.recursosFromArray(dataArray);
                     ModalServices.showFileValidation(employees).result.
                         result.then(function () {
-                            return EmployeeServices.updateFromArray(employees);
+                            return EmployeeServices.updateFromArray(employees. $scope.empregados);
                         });
                 };
 
@@ -63,7 +63,9 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                     $scope.spin.close();
                     ModalServices.showFileValidation(employees).
                         result.then(function () {
-                            return EmployeeServices.updateFromArray(employees);
+                            return EmployeeServices.updateFromArray(employees, $scope.empregados);
+                        }).then(function(data){
+                            ngToast.success("Rates actualizados");
                         });
                 };
                 $scope.spin = ModalServices.showSpinner();

@@ -63,8 +63,8 @@ mainApp.service('EmployeeServices', ['$http', '$q',function ($http, $q) {
         var actualizacao = [];
         newData.forEach(function(newElem){
             oldData.forEach(function(oldElem){
-                oldElem.rateHora = newElem.rateHora;
-                if (newElem == oldElem){
+                if (newElem.codigo == oldElem.codigo){
+                    oldElem.rateHora = newElem.rateHora;
                     actualizacao.push(oldElem);
                 }
             });
