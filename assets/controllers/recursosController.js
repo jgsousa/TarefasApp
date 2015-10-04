@@ -61,12 +61,16 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                 reader.onload = function (e) {
                     var employees = FileServices.XLSXToArray(reader.result);
                     $scope.spin.close();
-                    ModalServices.showFileValidation(employees).
-                        result.then(function () {
-                            return EmployeeServices.updateFromArray(employees, $scope.empregados);
-                        }).then(function(data){
-                            ngToast.success("Rates actualizados");
-                        });
+                    if (FileServices.isListaRecursosValid(employees)) {
+                        ModalServices.showFileValidation(employees).
+                            result.then(function () {
+                                return EmployeeServices.updateFromArray(employees, $scope.empregados);
+                            }).then(function (data) {
+                                ngToast.success("Rates actualizados");
+                            });
+                    } else {
+                        ngToast.danger("Usar template correcto");
+                    }
                 };
                 $scope.spin = ModalServices.showSpinner();
                 $scope.spin.opened.then(function(){

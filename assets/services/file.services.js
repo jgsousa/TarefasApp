@@ -87,4 +87,17 @@ mainApp.service('FileServices', [function () {
         //var output = JSON.stringify(result[0], 2, 2);
         return result[0];
     };
+
+    this.isListaRecursosValid = function(data){
+        var object = data[0];
+        if (object){
+            var keys = Object.keys(object);
+            var codigo = keys.indexOf("codigo");
+            var rate = keys.indexOf("rateHora");
+            var nome = keys.indexOf("nome");
+            return (!(codigo == -1 || rate == -1 || nome == -1));
+        } else {
+            return false;
+        }
+    };
 }]);
