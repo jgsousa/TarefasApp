@@ -1,5 +1,7 @@
 mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGroupingConstants', 'uiGridConstants',
-    'BudgetServices', function ($scope, BacklogServices, uiGridGroupingConstants, uiGridConstants, BudgetServices) {
+    'BudgetServices', 'ModalServices', 'FileServices',
+    function ($scope, BacklogServices, uiGridGroupingConstants, uiGridConstants, BudgetServices,
+              ModalServices, FileServices) {
 
         var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
         var sorter = function(a,b){
@@ -118,6 +120,29 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                 return Math.round(resultado / $scope.budgetData.valor * 100);
             } else {
                 return 0;
+            }
+        };
+
+        $scope.uploadBacklog = function(){
+            var file = event.target.files[0];
+            var openXLS = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            if (file.type.match(openXLS)){
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var backlog = FileServices.XLSXToArray(reader.result);
+                    $scope.spin.close();
+                    BacklogServices.processFile(backlog);
+                    ModalServices.showFileValidation(backlog).
+                        result.then(function () {
+                        });
+                };
+                $scope.spin = ModalServices.showSpinner();
+                $scope.spin.opened.then(function(){
+                    reader.readAsBinaryString(file);
+                });
+            } else {
+                $scope.textoLido = "File not supported!";
             }
         };
 

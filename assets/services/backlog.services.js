@@ -75,4 +75,58 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
             ProjectoServices.updateProjecto(data._id, data, success, error);
         });
     };
+
+    var  parseDate = function(str) {
+        var m = str.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+        return (m) ? m[3] + m[2] : null;
+    };
+
+    var findHoras = function(recurso, periodo, horas){
+        var output;
+        horas.forEach(function(element){
+            if (element.recursoCodigo == recurso && element.periodo == periodo){
+                output = element;
+            }
+        });
+        return output;
+    };
+
+    this.processFile = function(data){
+        var dias = Object.keys(data[0]);
+        var remove = [];
+        var chaves = {};
+        var projectos = {};
+        dias.forEach(function(element,index){
+            var x = parseDate(element);
+            if(!x){
+                remove.push(index);
+            } else {
+                chaves[element] = x;
+            }
+        });
+        dias.splice(0, remove.length);
+        data.forEach(function(element){
+            var projecto = projectos[element["Engagement Number"]];
+            if(!projecto){
+                projecto = {};
+                projectos[element["Engagement Number"]] = projecto;
+                projecto.codigo = element["Engagement Number"];
+                projecto.horas = [];
+            }
+            dias.forEach(function(dia){
+                if (element[dia] != 0){
+                    var hora = findHoras(element["Staff Number"], chaves[dia], projecto.horas);
+                    if (!hora){
+                        hora = {};
+                        hora.valor = 0;
+                        projecto.horas.push(hora);
+                    }
+                    hora.periodo = chaves[dia];
+                    hora.valor = hora.valor + parseInt(element[dia]);
+                    hora.recursoCodigo = element["Staff Number"];
+                }
+            });
+        });
+        return projectos;
+    }
 }]);
