@@ -1,4 +1,5 @@
-mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', function (ProjectoServices, EmployeeServices) {
+mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', '$http',
+    function (ProjectoServices, EmployeeServices, $http) {
 
     var getHoras = function (projecto, recurso, periodo) {
         for (var i = 0; i < projecto.horas.length; i++) {
@@ -98,7 +99,7 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
         var projectos = {};
         dias.forEach(function(element,index){
             var x = parseDate(element);
-            if(!x){
+            if (!x){
                 remove.push(index);
             } else {
                 chaves[element] = x;
@@ -107,7 +108,7 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
         dias.splice(0, remove.length);
         data.forEach(function(element){
             var projecto = projectos[element["Engagement Number"]];
-            if(!projecto){
+            if (!projecto){
                 projecto = {};
                 projectos[element["Engagement Number"]] = projecto;
                 projecto.codigo = element["Engagement Number"];
@@ -122,11 +123,18 @@ mainApp.service('BacklogServices', ['ProjectoServices', 'EmployeeServices', func
                         projecto.horas.push(hora);
                     }
                     hora.periodo = chaves[dia];
-                    hora.valor = hora.valor + parseInt(element[dia]);
+                    hora.valor = hora.valor + parseInt(element[dia], 10);
                     hora.recursoCodigo = element["Staff Number"];
                 }
             });
         });
         return projectos;
-    }
+    };
+
+    this.updateBacklog = function(periodo, data){
+        return $http.post('/projectos/backlog' + '/' + periodo, data, {}).
+        then(function(response){
+            return response.data;
+        });
+    };
 }]);

@@ -132,9 +132,10 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                 reader.onload = function (e) {
                     var backlog = FileServices.XLSXToArray(reader.result);
                     $scope.spin.close();
-                    BacklogServices.processFile(backlog);
-                    ModalServices.showFileValidation(backlog).
+                    var processed = BacklogServices.processFile(backlog);
+                    ModalServices.popUpToConfirm().
                         result.then(function () {
+                            BacklogServices.updateBacklog($scope.getPeriodo(), processed);
                         });
                 };
                 $scope.spin = ModalServices.showSpinner();

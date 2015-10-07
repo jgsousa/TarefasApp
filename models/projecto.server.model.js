@@ -1,4 +1,5 @@
 var db = require('mongoose');
+var Empregado = require('./recurso.server.model.js');
 
 var ProjectoSchema = new db.Schema({
     name: String,
@@ -37,7 +38,27 @@ ProjectoSchema.statics.deleteForId = function (id, callback) {
     this.getProjectoForId(id, function (err, projecto) {
         projecto.remove(callback);
     });
+};
 
+ProjectoSchema.methods.clearPeriodo = function(periodo){
+    var projecto = this;
+    this.horas.forEach(function(element, index){
+        if (periodo == element.periodo){
+            projecto.horas.splice(index, 1);
+        }
+    });
+};
+
+ProjectoSchema.methods.updateFromBacklog = function(periodo, projectoNovo){
+    var projecto = this;
+    projectoNovo.horas.forEach(function(element){
+       if (element.periodo == periodo){
+           Empregado.getEmpregadoForCodigo(element.recursoCodigo, function(err, employee){
+               element.recursoId = employee._id;
+               projecto.horas.push(element);
+           });
+       }
+    });
 };
 
 module.exports = db.model('projectos', ProjectoSchema);

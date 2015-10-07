@@ -25,6 +25,19 @@ module.exports = function (passport) {
         });
     });
 
+    router.post('/backlog/:periodo', isAuthenticated, function(req, res, next){
+        Projecto.getAllProjectos(function(err,docs){
+            docs.forEach(function(element, index){
+                var novo = req.body[element.codigo];
+                if (novo) {
+                    element.updateFromBacklog(req.params.periodo, novo);
+                }
+            });
+        });
+    });
+
+
+
     router.get('/projectos/:id', isAuthenticated, function (req, res, next) {
         var id = req.params.id;
         Projecto.getProjectoForId(id, function (err, docs) {
