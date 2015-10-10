@@ -1,11 +1,11 @@
 var niveis = [
     "Partner",
-    "AP",
+    "Associate Partner",
     "Senior Manager",
     "Manager",
     "Senior Consultant",
     "Consultant",
-    "Analista"
+    "Analyst"
 ];
 
 mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices','FileServices', 'ModalServices', 'ngToast',
