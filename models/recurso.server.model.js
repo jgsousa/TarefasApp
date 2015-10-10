@@ -7,7 +7,8 @@ var TarefaSchema = new db.Schema({
     dataInicio: Date,
     dataFim: Date,
     status: {type: String, default: "Aberta"},
-    texto: String
+    texto: String,
+    horasConsumidas: Number
 });
 
 var EmployeeSchema = new db.Schema({
@@ -105,6 +106,13 @@ EmployeeSchema.statics.getTarefas = function (callback) {
             }
         }
     }, {}, processarTarefas);
+};
+
+EmployeeSchema.statics.updateTarefaForEmpregado = function(employee, data, callback){
+    this.findOneAndUpdate({"_id":employee, "tarefas._id":data._id},
+        { "$set": { "tarefas.$": data } },
+        callback
+    );
 };
 
 module.exports = db.model('employees', EmployeeSchema);

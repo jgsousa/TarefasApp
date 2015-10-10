@@ -26,11 +26,30 @@ module.exports = function (passport) {
     });
 
     router.post('/backlog/:periodo', isAuthenticated, function(req, res, next){
+        var numero = 0;
+        var total;
+        var callback = function(){
+            if (numero == total ){
+                res.send("ok");
+            }
+        };
         Projecto.getAllProjectos(function(err,docs){
+            if (docs) {
+                total = docs.length;
+            } else {
+                total = 0;
+                callback();
+            }
             docs.forEach(function(element, index){
                 var novo = req.body[element.codigo];
                 if (novo) {
-                    element.updateFromBacklog(req.params.periodo, novo);
+                    element.updateFromBacklog(req.params.periodo, novo, function(){
+                        numero = numero + 1;
+                        callback();
+                    });
+                } else {
+                    numero = numero + 1;
+                    callback();
                 }
             });
         });

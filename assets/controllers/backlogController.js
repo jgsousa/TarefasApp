@@ -1,9 +1,9 @@
 mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGroupingConstants', 'uiGridConstants',
-    'BudgetServices', 'ModalServices', 'FileServices',
+    'BudgetServices', 'ModalServices', 'FileServices', 'ngToast',
     function ($scope, BacklogServices, uiGridGroupingConstants, uiGridConstants, BudgetServices,
-              ModalServices, FileServices) {
+              ModalServices, FileServices, ngToast) {
 
-        var niveis = [ "Partner", "AP", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analista"];
+        var niveis = [ "Partner", "Associate Partner", "Senior Manager", "Manager", "Senior Consultant", "Consultant", "Analyst"];
         var sorter = function(a,b){
             var indexA = niveis.indexOf(a.nivel);
             var indexB = niveis.indexOf(b.nivel);
@@ -30,7 +30,6 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
             columnDefs: [
                 {field: 'nivel', headerCellClass: 'blue', width: 150, pinnedLeft: true, grouping: {groupPriority: 0}},
                 {field: 'recurso', headerCellClass: 'blue', width: 150, pinnedLeft: true, enableFilter:true},
-                {field: 'rate', headerCellClass: 'blue', width: 70, pinnedLeft: true },
                 {field: 'horas', headerCellClass: 'blue', width:70, pinnedLeft: true,
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
                         var value = grid.getCellValue(row, col);
@@ -41,7 +40,8 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                                 return 'red';
                             }
                         }
-                    }}
+                    }},
+                {field: 'rate', headerCellClass: 'blue', width: 70 }
             ],
             enableGridMenu: true,
             exporterCsvFilename: 'myFile.csv',
@@ -133,9 +133,19 @@ mainApp.controller('backlogController', ['$scope', 'BacklogServices', 'uiGridGro
                     var backlog = FileServices.XLSXToArray(reader.result);
                     $scope.spin.close();
                     var processed = BacklogServices.processFile(backlog);
-                    ModalServices.popUpToConfirm().
+                    ModalServices.popUpToConfirm("Confirmar o carregamento?").
                         result.then(function () {
-                            BacklogServices.updateBacklog($scope.getPeriodo(), processed);
+                            BacklogServices.updateBacklog($scope.getPeriodo(), processed)
+                                .then(function(){
+                                    BacklogServices.getBacklogData($scope.getPeriodo()).then(function (data) {
+                                        $scope.gridOptions.data = data.sort(sorter);
+                                        $scope.actualizarTotais();
+                                        if ($scope.budgetData){
+                                            $scope.budgetData.percentagem = $scope.getPercentagem();
+                                        }
+                                        ngToast.create('Carregado com sucesso');
+                                    });
+                                });
                         });
                 };
                 $scope.spin = ModalServices.showSpinner();

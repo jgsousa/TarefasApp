@@ -55,7 +55,7 @@ mainApp.controller("tarefasDetailController", ['$scope', '$routeParams', 'ngToas
                 });
             } else {
                 EmployeeServices.updateTarefaForEmployee($routeParams.id, $scope.tarefaData).then(function () {
-
+                    $location.path('/recursos/' + $routeParams.id);
                 });
             }
         };

@@ -95,7 +95,8 @@ mainApp.service('FileServices', [function () {
             var codigo = keys.indexOf("codigo");
             var rate = keys.indexOf("rateHora");
             var nome = keys.indexOf("nome");
-            return (!(codigo == -1 || rate == -1 || nome == -1));
+            var nivel = keys.indexOf("nivel");
+            return (!(codigo == -1 || rate == -1 || nome == -1 || nivel == -1));
         } else {
             return false;
         }

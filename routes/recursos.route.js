@@ -73,8 +73,9 @@ module.exports = function (passport) {
     });
 
     router.put('/recursos/:id/tarefa/:tarefa', isAuthenticated, function (req, res, next) {
-        //var tarefa = req.body;
-        //......
+        Empregado.updateTarefaForEmpregado(req.params.id, req.body, function(){
+           res.send("ok");
+        });
     });
 
     router.get('/mailrecursos', isAuthenticated, function (req, res, next) {

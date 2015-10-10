@@ -49,15 +49,47 @@ ProjectoSchema.methods.clearPeriodo = function(periodo){
     });
 };
 
-ProjectoSchema.methods.updateFromBacklog = function(periodo, projectoNovo){
-    var projecto = this;
-    projectoNovo.horas.forEach(function(element){
-       if (element.periodo == periodo){
-           Empregado.getEmpregadoForCodigo(element.recursoCodigo, function(err, employee){
-               element.recursoId = employee._id;
-               projecto.horas.push(element);
-           });
+ProjectoSchema.methods.findHorasForRecurso = function(periodo, recursoId){
+    var saida;
+    this.horas.forEach(function(element){
+       if (element.periodo == periodo && element.recursoId == recursoId){
+           saida = element;
        }
+    });
+    return saida;
+};
+
+ProjectoSchema.methods.updateFromBacklog = function(periodo, projectoNovo, callback){
+    var projecto = this;
+    var changed = false;
+    var empregados = {};
+    Empregado.getAllEmployees(function(err, docs){
+        docs.forEach(function(element){
+            empregados[element.codigo] = element;
+        });
+        projectoNovo.horas.forEach(function(element){
+            if (element.periodo == periodo){
+                var empregado = empregados[element.recursoCodigo];
+                if (empregado){
+                    var horas = projecto.findHorasForRecurso(periodo, empregado._id);
+                    if (!horas) { // se ainda não existe esta combinação criar
+                        element.recursoId = empregado._id;
+                        element.numero = element.valor;
+                        projecto.horas.push(element);
+                    } else {
+                        horas.numero = element.valor;
+                    }
+                    changed = true;
+                }
+            }
+        });
+        if (changed){
+            projecto.save(function(){
+                callback();
+            });
+        } else {
+            callback();
+        }
     });
 };
 

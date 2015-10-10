@@ -66,7 +66,7 @@ mainApp.controller("recursosController", ['$scope', '$filter', 'EmployeeServices
                             result.then(function () {
                                 return EmployeeServices.updateFromArray(employees, $scope.empregados);
                             }).then(function (data) {
-                                ngToast.success("Rates actualizados");
+                                ngToast.success("Users actualizados");
                             });
                     } else {
                         ngToast.danger("Usar template correcto");
